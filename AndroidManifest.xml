@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.sudarmuthu.android.workouttracker" android:versionCode="1"
 	android:versionName="1.0">
-	<application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".app.WorkoutTracerApp">
+	<application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".app.WorkoutTrackerApp">
 		<activity android:name=".activities.ShowTypesListActivity"
 			android:label="@string/app_name">
 			<intent-filter>
