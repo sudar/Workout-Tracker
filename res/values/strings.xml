@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_entry_group_date">Group by date</string>
+    <string name="menu_delete_entry">Delete Entry</string>
+    <string name="menu_entry_edit">Edit Entry</string>
+    <string name="type">Type: </string>
+    <string name="value">Value:</string>
+    <string name="menu_add_entry">Add Entry</string>
+    <string name="menu_about">About</string>
+    <string name="menu_add_type">Add Type</string>
+    <string name="hello">Hello World, Types!</string>
+    <string name="app_name">Workout Tracker</string>
+<string name="add_type_title">Add new type</string>
+<string name="add">Add</string>
+<string name="type_saved">The new type has been saved</string>
+<string name="entry_saved">The new entry has been saved</string>
+<string name="entry_deleted">The selected entry was deleted</string>
+<string name="entry_edited">The selected entry was updated</string>
+<string name="edit">Edit</string>
+</resources>

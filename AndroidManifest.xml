@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.sudarmuthu.android.workouttracker" android:versionCode="1"
+	android:versionName="1.0">
+	<application android:icon="@drawable/icon" android:label="@string/app_name" android:name=".app.WorkoutTracerApp">
+		<activity android:name=".activities.ShowTypesListActivity"
+			android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+
+		<activity android:name=".activities.EntriesListActivity"></activity>
+		<activity android:name=".activities.EntriesDateActivity"></activity>
+		<activity android:name=".activities.EntriesGraphActivity"></activity>
+		<activity android:name=".activities.EntriesStatsActivity"></activity>
+
+		<activity android:name=".activities.TabWidget" android:label="@string/app_name"
+			android:theme="@android:style/Theme.NoTitleBar">
+		</activity>
+	</application>
+</manifest> 

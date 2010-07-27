@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout android:id="@+id/TableLayout01" xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:stretchColumns="1" android:layout_height="fill_parent">
+	<TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<TextView android:text="" android:padding="3dip" android:id="@+id/date"></TextView>
+		<TextView android:text="" android:padding="3dip" android:id="@+id/day_seq" android:gravity="center"></TextView>
+		<TextView android:text="" android:padding="3dip" android:id="@+id/value"></TextView>
+	</TableRow>
+</TableLayout>

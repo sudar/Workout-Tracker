@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:title="@string/menu_add_entry" android:id="@+id/add_entry">
+</item>
+<item android:id="@+id/group_entry_by_date" android:title="@string/menu_entry_group_date">
+</item>
+</menu>
