@@ -13,11 +13,31 @@ import android.app.Application;
  */
 public class WorkoutTrackerApp extends Application {
 
+	private DialogStatus currrentDialogStatus = DialogStatus.DEFAULT;
+	
+	public enum DialogStatus {
+		DEFAULT, ADD, EDIT;
+	}
+	
 	/**
 	 * Default Contstructor
 	 */
 	public WorkoutTrackerApp() {
 		super();
+	}
+
+	/**
+	 * @param currrentDialogStatus the currrentDialogStatus to set
+	 */
+	public void setCurrrentDialogStatus(DialogStatus currrentDialogStatus) {
+		this.currrentDialogStatus = currrentDialogStatus;
+	}
+
+	/**
+	 * @return the currrentDialogStatus
+	 */
+	public DialogStatus getCurrrentDialogStatus() {
+		return currrentDialogStatus;
 	}
 
 }

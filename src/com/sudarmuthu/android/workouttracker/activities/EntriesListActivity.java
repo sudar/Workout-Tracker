@@ -37,6 +37,8 @@ import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.sudarmuthu.android.workouttracker.R;
+import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp;
+import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp.DialogStatus;
 import com.sudarmuthu.android.workouttracker.data.DBUtil;
 import com.sudarmuthu.android.workouttracker.data.Entry;
 import com.sudarmuthu.android.workouttracker.data.Type;
@@ -64,7 +66,6 @@ public class EntriesListActivity extends ListActivity {
 	private ArrayAdapter<Entry> mArrayAdapter;
 	
 	private static final int DIALOG_ADD_ENTRY = 0;
-	private static final int DIALOG_EDIT_ENTRY = 1;
 	private static final int DIALOG_DATE_PICKER = 2;
 	private static final int DIALOG_TIME_PICKER = 3;
 
@@ -258,7 +259,11 @@ public class EntriesListActivity extends ListActivity {
 	 */
 	private void editEntry(int position) {
 		entryTime.setTag(entries.get(position));
-		showDialog(DIALOG_EDIT_ENTRY);
+		
+		WorkoutTrackerApp app = (WorkoutTrackerApp) getApplication();
+		app.setCurrrentDialogStatus(DialogStatus.EDIT);
+		
+		showDialog(DIALOG_ADD_ENTRY);
 	}
 
 	/**
@@ -297,6 +302,8 @@ public class EntriesListActivity extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.add_entry:
+			WorkoutTrackerApp app = (WorkoutTrackerApp) getApplication();
+			app.setCurrrentDialogStatus(DialogStatus.ADD);
 			showDialog(DIALOG_ADD_ENTRY);
 			break;
 
@@ -325,70 +332,18 @@ public class EntriesListActivity extends ListActivity {
 		switch (id) {
 		
 		case DIALOG_ADD_ENTRY:
-			resetDialog();
-			
 			//build the dialog
 			builder = new AlertDialog.Builder(mContext);
 			builder.setView(mAddEntryDialogLayout);
-			builder.setMessage(this.getString(R.string.add) + " " + type.getName())
+			builder.setMessage("")
 		       .setCancelable(false)
-		       .setPositiveButton(this.getString(R.string.add), new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-		        	   //Insert the new data into db
-		        	   EditText entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
-		        	   int maxDaySeq = Integer.parseInt((String) entryDate.getTag());
-		        	   Entry entry = new Entry(type.getId(), getEntryDate(), maxDaySeq + 1, entryValue.getText().toString());
-		        	   
-		        	   DBUtil.insertEntry(mContext, entry);
-		        	   Toast.makeText(mContext, mContext.getResources().getString(R.string.entry_saved), Toast.LENGTH_SHORT).show();
-		        	   
-		        	   mArrayAdapter.add(entry);
-		        	   mArrayAdapter.notifyDataSetChanged();
-		           }
-
-		       })
-		       .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-		                dialog.cancel();
-		           }
-		       });
+		       .setPositiveButton("Add", null)
+		       .setNegativeButton("Cancel", null);
 			
 			dialog = builder.create();
 			
 			break;
 			
-		case DIALOG_EDIT_ENTRY:
-			resetDialog();
-			
-			//build the dialog
-			builder = new AlertDialog.Builder(mContext);
-			builder.setView(mAddEntryDialogLayout);
-			builder.setMessage(this.getString(R.string.edit) + " " + type.getName())
-			.setCancelable(false)
-			.setPositiveButton(this.getString(R.string.edit), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					//UPdate the data into db
-					EditText entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
-					
-					Entry entryToEdit = (Entry) entryTime.getTag();
-					entryToEdit.setDate(getEntryDate());
-					entryToEdit.setValue(entryValue.getText().toString());
-					
-					DBUtil.updateEntry(mContext, entryToEdit);
-					Toast.makeText(mContext, mContext.getResources().getString(R.string.entry_edited), Toast.LENGTH_SHORT).show();		
-					mArrayAdapter.notifyDataSetChanged();
-				}
-			})
-			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-				}
-			});
-			
-			dialog = builder.create();
-			
-			break;
-
 		case DIALOG_DATE_PICKER:
 			// Date picker
 			dialog = new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
@@ -417,32 +372,81 @@ public class EntriesListActivity extends ListActivity {
 		case DIALOG_ADD_ENTRY:
 			
 			AlertDialog alertDialog = (AlertDialog) dialog;
-			alertDialog.setMessage("Test");
-			alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel1", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-				}
-			});
 			
-			setDateAndtime();
-			updateDisplay();
-			resetMaxDaySeq();
+			WorkoutTrackerApp app = (WorkoutTrackerApp) getApplication();
+			switch (app.getCurrrentDialogStatus()) {
+			case ADD:
+			
+				alertDialog.setMessage(this.getString(R.string.add, type.getName()));
+				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getString(R.string.add), new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			        	   //Insert the new data into db
+			        	   EditText entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
+			        	   int maxDaySeq = Integer.parseInt((String) entryDate.getTag());
+			        	   Entry entry = new Entry(type.getId(), getEntryDate(), maxDaySeq + 1, entryValue.getText().toString());
+			        	   
+			        	   DBUtil.insertEntry(mContext, entry);
+			        	   Toast.makeText(mContext, mContext.getResources().getString(R.string.entry_saved), Toast.LENGTH_SHORT).show();
+			        	   
+			        	   mArrayAdapter.add(entry);
+			        	   mArrayAdapter.notifyDataSetChanged();
+			           }
 
-			EditText entryValue;
-			entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
-			entryValue.setText("");
+			       });
+				
+				setDateAndtime();
+				updateDisplay();
+				resetMaxDaySeq();
+				
+				EditText entryValue;
+				entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
+				entryValue.setText("");
+
+				break;
+				
+			case EDIT:
+				
+				alertDialog.setMessage(this.getString(R.string.edit, type.getName()));
+
+				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getString(R.string.add), new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			        	   //Update the data into db
+							EditText entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
+							
+							Entry entryToEdit = (Entry) entryTime.getTag();
+							entryToEdit.setDate(getEntryDate());
+							entryToEdit.setValue(entryValue.getText().toString());
+							
+							DBUtil.updateEntry(mContext, entryToEdit);
+							Toast.makeText(mContext, mContext.getResources().getString(R.string.entry_edited), Toast.LENGTH_SHORT).show();		
+							mArrayAdapter.notifyDataSetChanged();
+			           }
+
+			       });
+				
+				Entry entryToEdit = (Entry) entryTime.getTag();
+				entryDate.setTag(Integer.toString(entryToEdit.getDaySeq()));
+				
+				EditText entryValue1;
+				entryValue1 = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
+				entryValue1.setText(entryToEdit.getValue());
+				
+				setDateAndtime(entryToEdit.getDate());
+				updateDisplay();
+				break;
+				
+			case DEFAULT:
+				
+				break;
+			}
 			
-			break;
-		case DIALOG_EDIT_ENTRY:
-			Entry entryToEdit = (Entry) entryTime.getTag();
-			entryDate.setTag(Integer.toString(entryToEdit.getDaySeq()));
+			alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		                dialog.cancel();
+		           }
+		       });
 			
-			EditText entryValue1;
-			entryValue1 = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
-			entryValue1.setText(entryToEdit.getValue());
-			
-			setDateAndtime(entryToEdit.getDate());
-			updateDisplay();
+			app.setCurrrentDialogStatus(DialogStatus.DEFAULT);			
 			break;
 		case DIALOG_DATE_PICKER:
 			// Date picker
@@ -510,17 +514,6 @@ public class EntriesListActivity extends ListActivity {
 		});
 	}
 
-	/**
-	 * Remove the dialog view from the Activity if it is already present 
-	 */
-	private void resetDialog() {
-		ViewGroup vg = (ViewGroup) mAddEntryDialogLayout.getParent();
-		if (vg != null) {
-			vg.removeView(mAddEntryDialogLayout);
-		}
-	}
-
-	
 	/**
 	 * Pad the time display
 	 * 

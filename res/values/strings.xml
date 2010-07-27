@@ -11,10 +11,11 @@
     <string name="hello">Hello World, Types!</string>
     <string name="app_name">Workout Tracker</string>
 <string name="add_type_title">Add new type</string>
-<string name="add">Add</string>
+<string name="add">Add %s</string>
 <string name="type_saved">The new type has been saved</string>
 <string name="entry_saved">The new entry has been saved</string>
 <string name="entry_deleted">The selected entry was deleted</string>
 <string name="entry_edited">The selected entry was updated</string>
-<string name="edit">Edit</string>
+<string name="edit">Edit %s</string>
+<string name="cancel">Cancel</string>
 </resources>
