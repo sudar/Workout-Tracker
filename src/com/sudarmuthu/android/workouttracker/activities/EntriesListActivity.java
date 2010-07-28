@@ -39,6 +39,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import com.sudarmuthu.android.workouttracker.R;
 import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp;
 import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp.DialogStatus;
+import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp.GroupBy;
 import com.sudarmuthu.android.workouttracker.data.DBUtil;
 import com.sudarmuthu.android.workouttracker.data.Entry;
 import com.sudarmuthu.android.workouttracker.data.Type;
@@ -49,9 +50,11 @@ import com.sudarmuthu.android.workouttracker.data.Type;
  */
 public class EntriesListActivity extends ListActivity {
     
+	private static final String TAG = "ShowEntries";
+	
 	private LayoutInflater mInflater;
-    private List<Entry> entries;
-    private Type type;
+    private List<Entry> mEntries;
+    private Type mType;
 	private int mYear;
 	private int mMonth;
 	private int mDay;
@@ -60,10 +63,10 @@ public class EntriesListActivity extends ListActivity {
 	private int mHour;
 	private int mMinute;
 	private int mSecond;
-	private static final String TAG = "ShowEntries";
 	private View mAddEntryDialogLayout;
 	private Context mContext;
 	private ArrayAdapter<Entry> mArrayAdapter;
+	private WorkoutTrackerApp mApp;
 	
 	private static final int DIALOG_ADD_ENTRY = 0;
 	private static final int DIALOG_DATE_PICKER = 2;
@@ -140,7 +143,7 @@ public class EntriesListActivity extends ListActivity {
 				holder = (ViewHolder) convertView.getTag();
 			}
 
-			Entry entry = (Entry) entries.get(position);
+			Entry entry = (Entry) mEntries.get(position);
 
 			holder.date.setText(DBUtil.dateToString(entry.getDate(), "yyyy-MM-dd HH:mm:ss"));
 			holder.daySeq.setText("" + entry.getDaySeq());
@@ -178,7 +181,7 @@ public class EntriesListActivity extends ListActivity {
 				holder = (ViewHolder) convertView.getTag();
 			}
 
-			Entry entry = (Entry) entries.get(position);
+			Entry entry = (Entry) mEntries.get(position);
 
 			holder.date.setText(DBUtil.dateToString(entry.getDate(), "yyyy-MM-dd"));
 			holder.daySeq.setText("-");
@@ -193,23 +196,31 @@ public class EntriesListActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.entry_list);
 		
+		mApp = (WorkoutTrackerApp) getApplication();		
         mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mContext = this;
 
         Bundle bundle = getIntent().getExtras();
-        
         Log.v(TAG, "Got id: " + bundle.getInt("typeId"));
-        type = DBUtil.fetchType(this, bundle.getInt("typeId"));
+        mType = DBUtil.fetchType(mContext, bundle.getInt("typeId"));
         
-        entries = DBUtil.fetchEntries(this, bundle.getInt("typeId"));
-        
-        mArrayAdapter = new FullAdapter(this, R.layout.entry_list_item, entries); 
+        switch (mApp.getCurrentGroupBy()) {
+		case NONE:
+			mEntries = DBUtil.fetchEntries(mContext, bundle.getInt("typeId"));
+			mArrayAdapter = new FullAdapter(mContext, R.layout.entry_list_item, mEntries); 
+			break;
+
+		case DATE:
+			mEntries = DBUtil.fetchEntriesByDate(mContext, bundle.getInt("typeId"));
+			mArrayAdapter = new ByDateAdapter(mContext, R.layout.entry_list_item, mEntries); 
+			break;
+		}
         
         setListAdapter(mArrayAdapter);
         
         setDateAndtime();
         
         //dialog box layout
-		mContext = this;
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
 		mAddEntryDialogLayout = inflater.inflate(R.layout.add_entry_dialog,
 		                               (ViewGroup) findViewById(R.id.layout_root));
@@ -258,10 +269,9 @@ public class EntriesListActivity extends ListActivity {
 	 * @param id
 	 */
 	private void editEntry(int position) {
-		entryTime.setTag(entries.get(position));
+		entryTime.setTag(mEntries.get(position));
 		
-		WorkoutTrackerApp app = (WorkoutTrackerApp) getApplication();
-		app.setCurrrentDialogStatus(DialogStatus.EDIT);
+		mApp.setCurrrentDialogStatus(DialogStatus.EDIT);
 		
 		showDialog(DIALOG_ADD_ENTRY);
 	}
@@ -272,7 +282,7 @@ public class EntriesListActivity extends ListActivity {
 	 * @param position
 	 */
 	private void deleteEntry(int position) {
-		Entry entry = entries.get(position);
+		Entry entry = mEntries.get(position);
 		DBUtil.deleteEntry(mContext, entry.getId());
 		
  	    Toast.makeText(mContext, mContext.getResources().getString(R.string.entry_deleted), Toast.LENGTH_SHORT).show();		
@@ -302,18 +312,19 @@ public class EntriesListActivity extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.add_entry:
-			WorkoutTrackerApp app = (WorkoutTrackerApp) getApplication();
-			app.setCurrrentDialogStatus(DialogStatus.ADD);
+			mApp.setCurrrentDialogStatus(DialogStatus.ADD);
 			showDialog(DIALOG_ADD_ENTRY);
 			break;
 
 		case R.id.group_entry_by_date:
 	        Bundle bundle = getIntent().getExtras();
-			entries = DBUtil.fetchEntriesByDate(mContext, bundle.getInt("typeId"));
-			mArrayAdapter = new ByDateAdapter(this, R.layout.entry_list_item, entries);
+			mEntries = DBUtil.fetchEntriesByDate(mContext, bundle.getInt("typeId"));
+			mArrayAdapter = new ByDateAdapter(this, R.layout.entry_list_item, mEntries);
 			
 			setListAdapter(mArrayAdapter);
 			mArrayAdapter.notifyDataSetInvalidated();
+			
+			mApp.setCurrentGroupBy(GroupBy.DATE);
 			break;
 		default:
 			break;
@@ -338,7 +349,11 @@ public class EntriesListActivity extends ListActivity {
 			builder.setMessage("")
 		       .setCancelable(false)
 		       .setPositiveButton("Add", null)
-		       .setNegativeButton("Cancel", null);
+		       .setNegativeButton(this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		                dialog.cancel();
+		           }
+		       });
 			
 			dialog = builder.create();
 			
@@ -368,22 +383,23 @@ public class EntriesListActivity extends ListActivity {
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		
+		EditText entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
+		
 		switch (id) {
 		case DIALOG_ADD_ENTRY:
 			
 			AlertDialog alertDialog = (AlertDialog) dialog;
 			
-			WorkoutTrackerApp app = (WorkoutTrackerApp) getApplication();
-			switch (app.getCurrrentDialogStatus()) {
+			switch (mApp.getCurrrentDialogStatus()) {
 			case ADD:
 			
-				alertDialog.setMessage(this.getString(R.string.add, type.getName()));
+				alertDialog.setMessage(this.getString(R.string.add, mType.getName()));
 				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getString(R.string.add), new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			        	   //Insert the new data into db
 			        	   EditText entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
 			        	   int maxDaySeq = Integer.parseInt((String) entryDate.getTag());
-			        	   Entry entry = new Entry(type.getId(), getEntryDate(), maxDaySeq + 1, entryValue.getText().toString());
+			        	   Entry entry = new Entry(mType.getId(), getEntryDate(), maxDaySeq + 1, entryValue.getText().toString());
 			        	   
 			        	   DBUtil.insertEntry(mContext, entry);
 			        	   Toast.makeText(mContext, mContext.getResources().getString(R.string.entry_saved), Toast.LENGTH_SHORT).show();
@@ -397,18 +413,16 @@ public class EntriesListActivity extends ListActivity {
 				setDateAndtime();
 				updateDisplay();
 				resetMaxDaySeq();
-				
-				EditText entryValue;
-				entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
+
 				entryValue.setText("");
 
 				break;
 				
 			case EDIT:
 				
-				alertDialog.setMessage(this.getString(R.string.edit, type.getName()));
-
-				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getString(R.string.add), new DialogInterface.OnClickListener() {
+				alertDialog.setMessage(this.getString(R.string.edit, mType.getName()));
+				
+				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getString(R.string.edit), new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			        	   //Update the data into db
 							EditText entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
@@ -427,9 +441,7 @@ public class EntriesListActivity extends ListActivity {
 				Entry entryToEdit = (Entry) entryTime.getTag();
 				entryDate.setTag(Integer.toString(entryToEdit.getDaySeq()));
 				
-				EditText entryValue1;
-				entryValue1 = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
-				entryValue1.setText(entryToEdit.getValue());
+				entryValue.setText(entryToEdit.getValue());
 				
 				setDateAndtime(entryToEdit.getDate());
 				updateDisplay();
@@ -440,14 +452,9 @@ public class EntriesListActivity extends ListActivity {
 				break;
 			}
 			
-			alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-		                dialog.cancel();
-		           }
-		       });
-			
-			app.setCurrrentDialogStatus(DialogStatus.DEFAULT);			
+			mApp.setCurrrentDialogStatus(DialogStatus.DEFAULT);			
 			break;
+			
 		case DIALOG_DATE_PICKER:
 			// Date picker
 			DatePickerDialog datePicker = (DatePickerDialog) dialog;
@@ -485,7 +492,7 @@ public class EntriesListActivity extends ListActivity {
 	 */
 	private void resetMaxDaySeq() {
 		// set the max day seq
-		int maxDaySeq = DBUtil.getMaxDaySeq(mContext, mYear + "-" + pad(mMonth + 1) + "-" + pad(mDay), type.getId());
+		int maxDaySeq = DBUtil.getMaxDaySeq(mContext, mYear + "-" + pad(mMonth + 1) + "-" + pad(mDay), mType.getId());
 		entryDate.setTag(Integer.toString(maxDaySeq));
 	}
 

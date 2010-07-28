@@ -14,9 +14,14 @@ import android.app.Application;
 public class WorkoutTrackerApp extends Application {
 
 	private DialogStatus currrentDialogStatus = DialogStatus.DEFAULT;
-	
+	private GroupBy currentGroupBy = GroupBy.NONE; 
+
 	public enum DialogStatus {
 		DEFAULT, ADD, EDIT;
+	}
+
+	public enum GroupBy {
+		NONE, DATE;
 	}
 	
 	/**
@@ -38,6 +43,20 @@ public class WorkoutTrackerApp extends Application {
 	 */
 	public DialogStatus getCurrrentDialogStatus() {
 		return currrentDialogStatus;
+	}
+
+	/**
+	 * @param currentGroupBy the currentGroupBy to set
+	 */
+	public void setCurrentGroupBy(GroupBy currentGroupBy) {
+		this.currentGroupBy = currentGroupBy;
+	}
+
+	/**
+	 * @return the currentGroupBy
+	 */
+	public GroupBy getCurrentGroupBy() {
+		return currentGroupBy;
 	}
 
 }
