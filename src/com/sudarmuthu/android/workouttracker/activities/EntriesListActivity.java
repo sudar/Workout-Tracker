@@ -153,7 +153,12 @@ public class EntriesListActivity extends ListActivity {
 		}
 	}
 
-	// Group by Date Array Adpater
+	/**
+	 * Group by Date Array Adpater
+	 * 
+	 * @author "Sudar Muthu (sudarm@)"
+	 *
+	 */
 	private class GroupByDateAdapter extends ArrayAdapter<Entry> {
 		/**
 		 * @param context
@@ -235,12 +240,14 @@ public class EntriesListActivity extends ListActivity {
 	 * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo)
 	 */
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+
 		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.entry_context_menu, menu);
+
+		if (mApp.getCurrentGroupBy() == GroupBy.NONE) {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.entry_context_menu, menu);
+		}
 		
 	}
 
