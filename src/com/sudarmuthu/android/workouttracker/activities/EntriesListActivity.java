@@ -342,13 +342,7 @@ public class EntriesListActivity extends ListActivity {
 			
 			if (mApp.getCurrentGroupBy() != GroupBy.NONE) {
 				
-				mEntries = DBUtil.fetchEntries(mContext, mType.getId());
-				mArrayAdapter = new GroupByNoneAdapter(this, R.layout.entry_list_item, mEntries);
-				
-				setListAdapter(mArrayAdapter);
-				mArrayAdapter.notifyDataSetInvalidated();
-				
-				mApp.setCurrentGroupBy(GroupBy.NONE);
+				removeGroupBy();
 			}
 			
 			break;
@@ -430,10 +424,13 @@ public class EntriesListActivity extends ListActivity {
 			        	   DBUtil.insertEntry(mContext, entry);
 			        	   Toast.makeText(mContext, mContext.getResources().getString(R.string.entry_saved), Toast.LENGTH_SHORT).show();
 			        	   
-			        	   mArrayAdapter.add(entry);
-			        	   mArrayAdapter.notifyDataSetChanged();
+			        	   if (mApp.getCurrentGroupBy() != GroupBy.NONE) {
+			        		   removeGroupBy();
+			        	   } else {
+			        		   mArrayAdapter.add(entry);
+			        		   mArrayAdapter.notifyDataSetChanged();
+			        	   }
 			           }
-
 			       });
 				
 				setDateAndtime();
@@ -612,5 +609,19 @@ public class EntriesListActivity extends ListActivity {
 		mMinute = c.get(Calendar.MINUTE);
 		mSecond = c.get(Calendar.SECOND);
 	}
+
+	/**
+	 * Remove group by 
+	 */
+	private void removeGroupBy() {
+		mEntries = DBUtil.fetchEntries(mContext, mType.getId());
+		mArrayAdapter = new GroupByNoneAdapter(this, R.layout.entry_list_item, mEntries);
+		
+		setListAdapter(mArrayAdapter);
+		mArrayAdapter.notifyDataSetInvalidated();
+		
+		mApp.setCurrentGroupBy(GroupBy.NONE);
+	}
+
 	
 }
