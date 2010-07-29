@@ -114,13 +114,13 @@ public class EntriesListActivity extends ListActivity {
 	 * @author "Sudar Muthu (sudarm@)"
 	 *
 	 */
-	private class FullAdapter extends ArrayAdapter<Entry>{
+	private class GroupByNoneAdapter extends ArrayAdapter<Entry>{
 		/**
 		 * @param context
 		 * @param textViewResourceId
 		 * @param objects
 		 */
-		public FullAdapter(Context context, int textViewResourceId, List<Entry> objects) {
+		public GroupByNoneAdapter(Context context, int textViewResourceId, List<Entry> objects) {
 			super(context, textViewResourceId, objects);
 		}
 
@@ -154,13 +154,13 @@ public class EntriesListActivity extends ListActivity {
 	}
 
 	// Group by Date Array Adpater
-	private class ByDateAdapter extends ArrayAdapter<Entry> {
+	private class GroupByDateAdapter extends ArrayAdapter<Entry> {
 		/**
 		 * @param context
 		 * @param textViewResourceId
 		 * @param objects
 		 */
-		public ByDateAdapter(Context context, int textViewResourceId, List<Entry> objects) {
+		public GroupByDateAdapter(Context context, int textViewResourceId, List<Entry> objects) {
 			super(context, textViewResourceId, objects);
 		}
 
@@ -207,12 +207,12 @@ public class EntriesListActivity extends ListActivity {
         switch (mApp.getCurrentGroupBy()) {
 		case NONE:
 			mEntries = DBUtil.fetchEntries(mContext, bundle.getInt("typeId"));
-			mArrayAdapter = new FullAdapter(mContext, R.layout.entry_list_item, mEntries); 
+			mArrayAdapter = new GroupByNoneAdapter(mContext, R.layout.entry_list_item, mEntries); 
 			break;
 
 		case DATE:
 			mEntries = DBUtil.fetchEntriesByDate(mContext, bundle.getInt("typeId"));
-			mArrayAdapter = new ByDateAdapter(mContext, R.layout.entry_list_item, mEntries); 
+			mArrayAdapter = new GroupByDateAdapter(mContext, R.layout.entry_list_item, mEntries); 
 			break;
 		}
         
@@ -317,14 +317,33 @@ public class EntriesListActivity extends ListActivity {
 			break;
 
 		case R.id.group_entry_by_date:
-	        Bundle bundle = getIntent().getExtras();
-			mEntries = DBUtil.fetchEntriesByDate(mContext, bundle.getInt("typeId"));
-			mArrayAdapter = new ByDateAdapter(this, R.layout.entry_list_item, mEntries);
 			
-			setListAdapter(mArrayAdapter);
-			mArrayAdapter.notifyDataSetInvalidated();
+			if (mApp.getCurrentGroupBy() != GroupBy.DATE) {
+				
+				mEntries = DBUtil.fetchEntriesByDate(mContext, mType.getId());
+				mArrayAdapter = new GroupByDateAdapter(this, R.layout.entry_list_item, mEntries);
+				
+				setListAdapter(mArrayAdapter);
+				mArrayAdapter.notifyDataSetInvalidated();
+				
+				mApp.setCurrentGroupBy(GroupBy.DATE);
+			}
 			
-			mApp.setCurrentGroupBy(GroupBy.DATE);
+			break;
+			
+		case R.id.group_entry_by_none:
+			
+			if (mApp.getCurrentGroupBy() != GroupBy.NONE) {
+				
+				mEntries = DBUtil.fetchEntries(mContext, mType.getId());
+				mArrayAdapter = new GroupByNoneAdapter(this, R.layout.entry_list_item, mEntries);
+				
+				setListAdapter(mArrayAdapter);
+				mArrayAdapter.notifyDataSetInvalidated();
+				
+				mApp.setCurrentGroupBy(GroupBy.NONE);
+			}
+			
 			break;
 		default:
 			break;
