@@ -21,7 +21,7 @@ public class WorkoutTrackerApp extends Application {
 	}
 
 	public enum GroupBy {
-		NONE, DATE;
+		NONE, DATE, MAX;
 	}
 	
 	/**

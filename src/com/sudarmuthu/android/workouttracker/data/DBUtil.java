@@ -140,7 +140,7 @@ public class DBUtil {
 	 * @return
 	 */
 	public static List<Entry> fetchEntriesByDate(Context context, int typeId) {
-		String [] FROM = {_ID, ENTRY_TYPE_ID, ENTRY_DATE, ENTRY_DAY_SEQ, "SUM(" + ENTRY_VALUE + ")"};
+		String [] FROM = {_ID, ENTRY_TYPE_ID, ENTRY_DATE, "MAX(" + ENTRY_DAY_SEQ + ")", "SUM(" + ENTRY_VALUE + ")"};
 		String orderBy = ENTRY_DATE;
 		String where = ENTRY_TYPE_ID + "=" + typeId;
 		String groupBy = "date(" + ENTRY_DATE + ", 'unixepoch')";
@@ -163,6 +163,39 @@ public class DBUtil {
 		db.close();
 		return entires;
 	}
+	
+	/**
+	 * Group by Max
+	 * 
+	 * @param mContext
+	 * @param int1
+	 * @return
+	 */
+	public static List<Entry> fetchEntriesByMax(Context context, int typeId) {
+		String [] FROM = {_ID, ENTRY_TYPE_ID, ENTRY_DATE, ENTRY_DAY_SEQ, "MAX(" + ENTRY_VALUE + ")"};
+		String orderBy = ENTRY_DATE;
+		String where = ENTRY_TYPE_ID + "=" + typeId;
+		String groupBy = "date(" + ENTRY_DATE + ", 'unixepoch')";
+		
+		SQLiteDatabase db = new DBData(context).getWritableDatabase();
+		List<Entry> entires = new ArrayList<Entry>(); 
+		
+		Cursor cursor = db.query(ENTRY_TABLE_NAME, FROM, where, null, groupBy, null, orderBy); 
+
+		while (cursor.moveToNext()) {
+			Entry temp = new Entry(cursor.getInt(0),
+								   cursor.getInt(1), 
+								   new Date(cursor.getLong(2) * 1000),	
+								   cursor.getInt(3),
+								   cursor.getString(4));								   
+			entires.add(temp);
+		}
+		
+		cursor.close();
+		db.close();
+		return entires;
+	}
+
 	
 	/**
 	 * Insert entry into db

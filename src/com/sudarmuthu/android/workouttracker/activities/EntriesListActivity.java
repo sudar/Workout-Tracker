@@ -189,7 +189,7 @@ public class EntriesListActivity extends ListActivity {
 			Entry entry = (Entry) mEntries.get(position);
 
 			holder.date.setText(DBUtil.dateToString(entry.getDate(), "yyyy-MM-dd"));
-			holder.daySeq.setText("-");
+			holder.daySeq.setText("" + entry.getDaySeq());
 			holder.value.setText(entry.getValue());
 
 			return convertView;
@@ -217,6 +217,11 @@ public class EntriesListActivity extends ListActivity {
 
 		case DATE:
 			mEntries = DBUtil.fetchEntriesByDate(mContext, bundle.getInt("typeId"));
+			mArrayAdapter = new GroupByDateAdapter(mContext, R.layout.entry_list_item, mEntries); 
+			break;
+			
+		case MAX:
+			mEntries = DBUtil.fetchEntriesByMax(mContext, bundle.getInt("typeId"));
 			mArrayAdapter = new GroupByDateAdapter(mContext, R.layout.entry_list_item, mEntries); 
 			break;
 		}
@@ -334,6 +339,21 @@ public class EntriesListActivity extends ListActivity {
 				mArrayAdapter.notifyDataSetInvalidated();
 				
 				mApp.setCurrentGroupBy(GroupBy.DATE);
+			}
+			
+			break;
+			
+		case R.id.group_entry_by_max:
+			
+			if (mApp.getCurrentGroupBy() != GroupBy.MAX) {
+				
+				mEntries = DBUtil.fetchEntriesByMax(mContext, mType.getId());
+				mArrayAdapter = new GroupByDateAdapter(this, R.layout.entry_list_item, mEntries);
+				
+				setListAdapter(mArrayAdapter);
+				mArrayAdapter.notifyDataSetInvalidated();
+				
+				mApp.setCurrentGroupBy(GroupBy.MAX);
 			}
 			
 			break;
@@ -622,6 +642,4 @@ public class EntriesListActivity extends ListActivity {
 		
 		mApp.setCurrentGroupBy(GroupBy.NONE);
 	}
-
-	
 }

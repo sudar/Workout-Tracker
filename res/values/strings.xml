@@ -20,4 +20,5 @@
 <string name="entry_edited">The selected entry was updated</string>
 <string name="edit">Edit %s</string>
 <string name="cancel">Cancel</string>
+<string name="menu_group_by_max">Group by Max</string>
 </resources>
