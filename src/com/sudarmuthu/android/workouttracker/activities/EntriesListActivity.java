@@ -373,6 +373,15 @@ public class EntriesListActivity extends ListActivity {
 	}
 
 	/* (non-Javadoc)
+	 * @see android.app.Activity#onBackPressed()
+	 */
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		mApp.setCurrentGroupBy(GroupBy.NONE);
+	}
+
+	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreateDialog(int)
 	 */
 	@Override
