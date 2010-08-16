@@ -377,8 +377,8 @@ public class EntriesListActivity extends ListActivity {
 	 */
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
 		mApp.setCurrentGroupBy(GroupBy.NONE);
+		super.onBackPressed();
 	}
 
 	/* (non-Javadoc)

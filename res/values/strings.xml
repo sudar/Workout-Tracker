@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="menu_group_by_none">Group By None</string>
+    <string name="menu_group_by_none">Clear Groupings</string>
     <string name="menu_group_by">Group by</string>
-    <string name="menu_entry_group_date">Group by date</string>
+    <string name="menu_entry_group_date">Total per day</string>
     <string name="menu_delete_entry">Delete Entry</string>
     <string name="menu_entry_edit">Edit Entry</string>
     <string name="type">Type: </string>
@@ -20,5 +20,5 @@
 <string name="entry_edited">The selected entry was updated</string>
 <string name="edit">Edit %s</string>
 <string name="cancel">Cancel</string>
-<string name="menu_group_by_max">Group by Max</string>
+<string name="menu_group_by_max">Max per day</string>
 </resources>

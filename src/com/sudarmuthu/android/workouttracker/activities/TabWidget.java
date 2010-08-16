@@ -43,17 +43,11 @@ public class TabWidget extends TabActivity {
 
 	    // Group by Date tab
 	    intent = new Intent().setClass(this, EntriesDateActivity.class).putExtra("typeId", typeId);
-		spec = tabHost.newTabSpec("date").setIndicator("By Date",
+		spec = tabHost.newTabSpec("date").setIndicator("Graph",
 				res.getDrawable(R.drawable.ic_tab_date)).setContent(intent);
 	    tabHost.addTab(spec);
 
 	    // Do the same for the other tabs
-	    intent = new Intent().setClass(this, EntriesGraphActivity.class).putExtra("typeId", typeId);
-	    spec = tabHost.newTabSpec("graph").setIndicator("Graph",
-	    		res.getDrawable(R.drawable.ic_tab_list))
-	    		.setContent(intent);
-	    tabHost.addTab(spec);
-	    
 	    intent = new Intent().setClass(this, EntriesStatsActivity.class).putExtra("typeId", typeId);
 	    spec = tabHost.newTabSpec("stats").setIndicator("Stats",
 	                      res.getDrawable(R.drawable.ic_tab_list))
@@ -61,7 +55,5 @@ public class TabWidget extends TabActivity {
 	    tabHost.addTab(spec);
 
 	    tabHost.setCurrentTab(0);
-		
 	}
-
 }
