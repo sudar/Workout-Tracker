@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+		<item android:id="@+id/group_entry_by_date" android:title="@string/menu_entry_group_date"></item>
+		<item android:id="@+id/group_entry_by_max" android:title="@string/menu_group_by_max"></item>
+		<item android:id="@+id/group_entry_by_none" android:title="@string/menu_group_by_none"></item>
+</menu>

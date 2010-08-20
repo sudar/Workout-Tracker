@@ -8,10 +8,45 @@
 <script src="jquery.flot.min.js"></script>
 <script id="source" language="javascript" type="text/javascript">
 	
+var gdata; //global variable to store the data
+
 $(document).ready(function () {
 	document.getElementById('graphTitle').innerHTML = window.testhandler.getGraphTitle();
 	
 	window.testhandler.loadGraph();	
+	
+	// Full period
+	$('#whole').click(function () {
+		$.plot($("#graphHolder"), gdata, { xaxis: { mode: "time" } });
+	});
+	
+	// Last week
+	$('#lastWeek').click(function () {
+		var lastWeek = new Date();
+		lastWeek.setDate(lastWeek.getDate() - 7);
+		
+        $.plot($("#graphHolder"), gdata, {
+            xaxis: {
+                mode: "time",
+                min: (lastWeek).getTime(),
+                max: (new Date()).getTime()
+            }
+        });		
+	});
+	
+	// Last month
+	$('#lastMonth').click(function () {
+		var lastMonth = new Date();
+		lastMonth.setDate(lastMonth.getDate() - 30);
+		
+        $.plot($("#graphHolder"), gdata, {
+            xaxis: {
+                mode: "time",
+                min: (lastMonth).getTime(),
+                max: (new Date()).getTime()
+            }
+        });		
+	});
 });
 	
 /**
@@ -19,7 +54,8 @@ $(document).ready(function () {
  * 
  * @param {Object} gdata
  */	
-function GotGraph(gdata) {	
+function GotGraph(data) {	
+	gdata = data;
 	$.plot($("#graphHolder"), gdata, { xaxis: { mode: "time" } });	
 }
 </script>
@@ -28,5 +64,8 @@ function GotGraph(gdata) {
 <body>
 <h1 id="graphTitle"></h1>
 <div id="graphHolder"></div>
+<button id="whole">Full</button>
+<button id="lastMonth">Last Month</button>
+<button id="lastWeek">Last Week</button>
 </body>
 </html>

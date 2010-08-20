@@ -303,8 +303,8 @@ public class EntriesListActivity extends ListActivity {
 		mArrayAdapter.notifyDataSetChanged();
 	}
 	
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Create options menu
 	 * 
 	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
 	 */
@@ -315,8 +315,8 @@ public class EntriesListActivity extends ListActivity {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * When a Option menu item is selected
 	 * 
 	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
 	 */
@@ -383,7 +383,9 @@ public class EntriesListActivity extends ListActivity {
 		super.onBackPressed();
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * Create Dialog for the first time
+	 * 
 	 * @see android.app.Activity#onCreateDialog(int)
 	 */
 	@Override
