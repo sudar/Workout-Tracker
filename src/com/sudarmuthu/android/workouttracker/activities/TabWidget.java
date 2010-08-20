@@ -33,23 +33,23 @@ public class TabWidget extends TabActivity {
 	    // Create an Intent to launch an Activity for the tab (to be reused)
         Bundle bundle = getIntent().getExtras();
         int typeId = bundle.getInt("typeId");
-	    intent = new Intent().setClass(this, EntriesListActivity.class).putExtra("typeId", typeId);
 
 	    // Initialize a TabSpec for each tab and add it to the TabHost
 	    // Entry list tab
-	    spec = tabHost.newTabSpec("lists").setIndicator("Lists",
+        intent = new Intent().setClass(this, EntriesListActivity.class).putExtra("typeId", typeId);
+	    spec = tabHost.newTabSpec("lists").setIndicator(this.getString(R.string.tab_list),
 				res.getDrawable(R.drawable.ic_tab_list)).setContent(intent);
 	    tabHost.addTab(spec);
 
-	    // Group by Date tab
-	    intent = new Intent().setClass(this, EntriesDateActivity.class).putExtra("typeId", typeId);
-		spec = tabHost.newTabSpec("date").setIndicator("Graph",
+	    // Graph tab
+	    intent = new Intent().setClass(this, EntriesGraphActivity.class).putExtra("typeId", typeId);
+		spec = tabHost.newTabSpec("date").setIndicator(this.getString(R.string.tab_graph),
 				res.getDrawable(R.drawable.ic_tab_date)).setContent(intent);
 	    tabHost.addTab(spec);
 
-	    // Do the same for the other tabs
+	    // Stats tab
 	    intent = new Intent().setClass(this, EntriesStatsActivity.class).putExtra("typeId", typeId);
-	    spec = tabHost.newTabSpec("stats").setIndicator("Stats",
+	    spec = tabHost.newTabSpec("stats").setIndicator(this.getString(R.string.tab_stats),
 	                      res.getDrawable(R.drawable.ic_tab_list))
 	                  .setContent(intent);
 	    tabHost.addTab(spec);

@@ -21,4 +21,7 @@
 <string name="edit">Edit %s</string>
 <string name="cancel">Cancel</string>
 <string name="menu_group_by_max">Max per day</string>
+<string name="tab_list">Lists</string>
+<string name="tab_graph">Graph</string>
+<string name="tab_stats">Stats</string>
 </resources>

@@ -206,7 +206,7 @@ public class EntriesListActivity extends ListActivity {
         mContext = this;
 
         Bundle bundle = getIntent().getExtras();
-        Log.v(TAG, "Got id: " + bundle.getInt("typeId"));
+        Log.d(TAG, "Got type id: " + bundle.getInt("typeId"));
         mType = DBUtil.fetchType(mContext, bundle.getInt("typeId"));
         
         switch (mApp.getCurrentGroupBy()) {
@@ -372,7 +372,9 @@ public class EntriesListActivity extends ListActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * When the back button is pressed
+	 * 
 	 * @see android.app.Activity#onBackPressed()
 	 */
 	@Override
