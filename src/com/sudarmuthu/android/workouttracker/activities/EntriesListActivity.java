@@ -237,6 +237,16 @@ public class EntriesListActivity extends ListActivity {
         
 		inializeTimeControls();
 		
+		Button addEntryButton = (Button) findViewById(R.id.add_entry);
+		addEntryButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mApp.setCurrrentDialogStatus(DialogStatus.ADD);
+				showDialog(DIALOG_ADD_ENTRY);
+			}
+		});
+		
 		//register for context menu
 		registerForContextMenu(getListView());		
 	}
@@ -323,11 +333,7 @@ public class EntriesListActivity extends ListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.add_entry:
-			mApp.setCurrrentDialogStatus(DialogStatus.ADD);
-			showDialog(DIALOG_ADD_ENTRY);
-			break;
-
+		
 		case R.id.group_entry_by_date:
 			
 			if (mApp.getCurrentGroupBy() != GroupBy.DATE) {

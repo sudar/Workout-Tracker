@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"><!--
 	<item android:title="@string/menu_add_entry" android:id="@+id/add_entry">
 	</item>
 
-	<group android:id="@+id/entry_group_by">
+	--><group android:id="@+id/entry_group_by">
 		<item android:id="@+id/group_entry_by_date" android:title="@string/menu_entry_group_date"></item>
 		<item android:id="@+id/group_entry_by_max" android:title="@string/menu_group_by_max"></item>
 		<item android:id="@+id/group_entry_by_none" android:title="@string/menu_group_by_none"></item>
