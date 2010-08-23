@@ -15,13 +15,36 @@ public class WorkoutTrackerApp extends Application {
 
 	private DialogStatus currrentDialogStatus = DialogStatus.DEFAULT;
 	private GroupBy currentGroupBy = GroupBy.NONE; 
-
+	private SortBy currentSortBy = SortBy.DATE_ASC;
+	
+	/**
+	 * Current dialog status
+	 * 
+	 * @author "Sudar Muthu (sudarm@)"
+	 *
+	 */
 	public enum DialogStatus {
 		DEFAULT, ADD, EDIT;
 	}
 
+	/**
+	 * Current group by status
+	 * 
+	 * @author "Sudar Muthu (sudarm@)"
+	 *
+	 */
 	public enum GroupBy {
 		NONE, DATE, MAX;
+	}
+	
+	/**
+	 * Current Sort by status
+	 * 
+	 * @author "Sudar Muthu (sudarm@)"
+	 *
+	 */
+	public enum SortBy {
+		DATE_ASC, DATE_DESC, VALUE_ASC, VALUE_DESC;
 	}
 	
 	/**
@@ -57,6 +80,20 @@ public class WorkoutTrackerApp extends Application {
 	 */
 	public GroupBy getCurrentGroupBy() {
 		return currentGroupBy;
+	}
+
+	/**
+	 * @return the currentSortBy
+	 */
+	public SortBy getCurrentSortBy() {
+		return currentSortBy;
+	}
+
+	/**
+	 * @param currentSortBy the currentSortBy to set
+	 */
+	public void setCurrentSortBy(SortBy currentSortBy) {
+		this.currentSortBy = currentSortBy;
 	}
 
 }

@@ -111,12 +111,12 @@ public class DBUtil {
 	 * @param typeId
 	 * @return
 	 */
-	public static List<Entry> fetchEntries(Context context, int typeId) {
+	public static List<Entry> fetchEntries(Context context, int typeId, String orderBy) {
 		
 		List<Entry> entires = new ArrayList<Entry>(); 
 		SQLiteDatabase db = new DBData(context).getWritableDatabase();
 		
-		Cursor cursor = fetchEntriesFromDB(db, typeId);
+		Cursor cursor = fetchEntriesFromDB(db, typeId, orderBy);
 
 		while (cursor.moveToNext()) {
 			Entry temp = new Entry(cursor.getInt(0),
@@ -143,7 +143,7 @@ public class DBUtil {
 		JSONArray entires = new JSONArray(); 
 		SQLiteDatabase db = new DBData(context).getWritableDatabase();
 		
-		Cursor cursor = fetchEntriesFromDB(db, typeId);
+		Cursor cursor = fetchEntriesFromDB(db, typeId, ENTRY_DATE);
 		
 		while (cursor.moveToNext()) {
 			JSONArray entry = new JSONArray();
@@ -167,9 +167,8 @@ public class DBUtil {
 	 * @param typeId
 	 * @return
 	 */
-	private static Cursor fetchEntriesFromDB(SQLiteDatabase db, int typeId) {
+	private static Cursor fetchEntriesFromDB(SQLiteDatabase db, int typeId, String orderBy) {
 		String [] FROM = {_ID, ENTRY_TYPE_ID, ENTRY_DATE, ENTRY_DAY_SEQ, ENTRY_VALUE};
-		String orderBy = ENTRY_DATE;
 		String where = ENTRY_TYPE_ID + "=" + typeId;
 		
 		Cursor cursor = db.query(ENTRY_TABLE_NAME, FROM, where, null, null, null, orderBy);
@@ -184,12 +183,12 @@ public class DBUtil {
 	 * @param typeId
 	 * @return
 	 */
-	public static List<Entry> fetchEntriesByDate(Context context, int typeId) {
+	public static List<Entry> fetchEntriesByDate(Context context, int typeId, String orderBy) {
 		
 		SQLiteDatabase db = new DBData(context).getWritableDatabase();
 		List<Entry> entires = new ArrayList<Entry>(); 
 		
-		Cursor cursor = fetchEntriesByDateFromDB(db, typeId);
+		Cursor cursor = fetchEntriesByDateFromDB(db, typeId, orderBy);
 
 		while (cursor.moveToNext()) {
 			Entry temp = new Entry(cursor.getInt(0),
@@ -217,7 +216,7 @@ public class DBUtil {
 		SQLiteDatabase db = new DBData(context).getWritableDatabase();
 		JSONArray entires = new JSONArray(); 
 		
-		Cursor cursor = fetchEntriesByDateFromDB(db, typeId);
+		Cursor cursor = fetchEntriesByDateFromDB(db, typeId, ENTRY_DATE);
 		
 		while (cursor.moveToNext()) {
 			JSONArray entry = new JSONArray();
@@ -238,9 +237,8 @@ public class DBUtil {
 	 * @param typeId
 	 * @return
 	 */
-	private static Cursor fetchEntriesByDateFromDB(SQLiteDatabase db, int typeId) {
-		String [] FROM = {_ID, ENTRY_TYPE_ID, ENTRY_DATE, "MAX(" + ENTRY_DAY_SEQ + ")", "SUM(" + ENTRY_VALUE + ")"};
-		String orderBy = ENTRY_DATE;
+	private static Cursor fetchEntriesByDateFromDB(SQLiteDatabase db, int typeId, String orderBy) {
+		String [] FROM = {_ID, ENTRY_TYPE_ID, ENTRY_DATE, "MAX(" + ENTRY_DAY_SEQ + ")", "SUM(" + ENTRY_VALUE + ") AS " + ENTRY_VALUE};
 		String where = ENTRY_TYPE_ID + "=" + typeId;
 		String groupBy = "date(" + ENTRY_DATE + ", 'unixepoch')";
 
@@ -256,11 +254,11 @@ public class DBUtil {
 	 * @param int1
 	 * @return
 	 */
-	public static List<Entry> fetchEntriesByMax(Context context, int typeId) {
+	public static List<Entry> fetchEntriesByMax(Context context, int typeId, String orderBy) {
 		SQLiteDatabase db = new DBData(context).getWritableDatabase();
 		List<Entry> entires = new ArrayList<Entry>(); 
 		
-		Cursor cursor = fetchEntriesByMaxFromDB(db, typeId);
+		Cursor cursor = fetchEntriesByMaxFromDB(db, typeId, orderBy);
 		
 		while (cursor.moveToNext()) {
 			Entry temp = new Entry(cursor.getInt(0),
@@ -288,7 +286,7 @@ public class DBUtil {
 		SQLiteDatabase db = new DBData(context).getWritableDatabase();
 		JSONArray entires = new JSONArray(); 
 		
-		Cursor cursor = fetchEntriesByMaxFromDB(db, typeId);
+		Cursor cursor = fetchEntriesByMaxFromDB(db, typeId, ENTRY_DATE);
 		
 		while (cursor.moveToNext()) {
 			JSONArray entry = new JSONArray();
@@ -309,9 +307,8 @@ public class DBUtil {
 	 * @param typeId
 	 * @return
 	 */
-	private static Cursor fetchEntriesByMaxFromDB(SQLiteDatabase db, int typeId) {
-		String [] FROM = {_ID, ENTRY_TYPE_ID, ENTRY_DATE, ENTRY_DAY_SEQ, "MAX(" + ENTRY_VALUE + ")"};
-		String orderBy = ENTRY_DATE;
+	private static Cursor fetchEntriesByMaxFromDB(SQLiteDatabase db, int typeId, String orderBy) {
+		String [] FROM = {_ID, ENTRY_TYPE_ID, ENTRY_DATE, ENTRY_DAY_SEQ, "MAX(" + ENTRY_VALUE + ") AS " + ENTRY_VALUE};
 		String where = ENTRY_TYPE_ID + "=" + typeId;
 		String groupBy = "date(" + ENTRY_DATE + ", 'unixepoch')";
 		

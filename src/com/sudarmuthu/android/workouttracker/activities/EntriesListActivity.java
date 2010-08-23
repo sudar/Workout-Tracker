@@ -1,7 +1,10 @@
 /**
- * 
+ * Activity to display entries in list 
  */
 package com.sudarmuthu.android.workouttracker.activities;
+
+import static com.sudarmuthu.android.workouttracker.data.DBConstants.ENTRY_DATE;
+import static com.sudarmuthu.android.workouttracker.data.DBConstants.ENTRY_VALUE;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,23 +30,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.sudarmuthu.android.workouttracker.R;
 import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp;
 import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp.DialogStatus;
 import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp.GroupBy;
+import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp.SortBy;
 import com.sudarmuthu.android.workouttracker.data.DBUtil;
 import com.sudarmuthu.android.workouttracker.data.Entry;
 import com.sudarmuthu.android.workouttracker.data.Type;
-
 /**
  * @author "Sudar Muthu (sudarm@)"
  *
@@ -52,21 +58,24 @@ public class EntriesListActivity extends ListActivity {
     
 	private static final String TAG = "ShowEntries";
 	
-	private LayoutInflater mInflater;
     private List<Entry> mEntries;
     private Type mType;
-	private int mYear;
-	private int mMonth;
-	private int mDay;
 	private Button entryDate;
 	private Button entryTime;
-	private int mHour;
-	private int mMinute;
-	private int mSecond;
 	private View mAddEntryDialogLayout;
 	private Context mContext;
 	private ArrayAdapter<Entry> mArrayAdapter;
-	private WorkoutTrackerApp mApp;
+	
+	 // package scope, since it is accessed in inner classes
+	WorkoutTrackerApp mApp;
+	LayoutInflater mInflater;
+	
+	int mYear;
+	int mMonth;
+	int mDay;
+	int mHour;
+	int mMinute;
+	int mSecond;
 	
 	private static final int DIALOG_ADD_ENTRY = 0;
 	private static final int DIALOG_DATE_PICKER = 2;
@@ -106,66 +115,20 @@ public class EntriesListActivity extends ListActivity {
 	            updateDisplay();
 	        }
 	    };
-	    	
 	    
 	/**
-	 * Full Array Adapter
-	 *     
-	 * @author "Sudar Muthu (sudarm@)"
-	 *
-	 */
-	private class GroupByNoneAdapter extends ArrayAdapter<Entry>{
-		/**
-		 * @param context
-		 * @param textViewResourceId
-		 * @param objects
-		 */
-		public GroupByNoneAdapter(Context context, int textViewResourceId, List<Entry> objects) {
-			super(context, textViewResourceId, objects);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder;
-
-			if (null == convertView) {
-				convertView = mInflater.inflate(R.layout.entry_list_item,
-						parent, false);
-
-				holder = new ViewHolder();
-				holder.date = (TextView) convertView.findViewById(R.id.date);
-				holder.daySeq = (TextView) convertView
-						.findViewById(R.id.day_seq);
-				holder.value = (TextView) convertView.findViewById(R.id.value);
-
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-
-			Entry entry = (Entry) mEntries.get(position);
-
-			holder.date.setText(DBUtil.dateToString(entry.getDate(), "yyyy-MM-dd HH:mm:ss"));
-			holder.daySeq.setText("" + entry.getDaySeq());
-			holder.value.setText(entry.getValue());
-
-			return convertView;
-		}
-	}
-
-	/**
-	 * Group by Date Array Adpater
+	 * Group by Array Adpater
 	 * 
 	 * @author "Sudar Muthu (sudarm@)"
 	 *
 	 */
-	private class GroupByDateAdapter extends ArrayAdapter<Entry> {
+	private class GroupByAdapter extends ArrayAdapter<Entry> {
 		/**
 		 * @param context
 		 * @param textViewResourceId
 		 * @param objects
 		 */
-		public GroupByDateAdapter(Context context, int textViewResourceId, List<Entry> objects) {
+		public GroupByAdapter(Context context, int textViewResourceId, List<Entry> objects) {
 			super(context, textViewResourceId, objects);
 		}
 
@@ -188,7 +151,12 @@ public class EntriesListActivity extends ListActivity {
 
 			Entry entry = (Entry) mEntries.get(position);
 
-			holder.date.setText(DBUtil.dateToString(entry.getDate(), "yyyy-MM-dd"));
+			if (mApp.getCurrentGroupBy() == GroupBy.NONE) {
+				holder.date.setText(DBUtil.dateToString(entry.getDate(), "yyyy-MM-dd HH:mm:ss"));				
+			} else {
+				holder.date.setText(DBUtil.dateToString(entry.getDate(), "yyyy-MM-dd"));
+			}
+			
 			holder.daySeq.setText("" + entry.getDaySeq());
 			holder.value.setText(entry.getValue());
 
@@ -209,25 +177,7 @@ public class EntriesListActivity extends ListActivity {
         Log.d(TAG, "Got type id: " + bundle.getInt("typeId"));
         mType = DBUtil.fetchType(mContext, bundle.getInt("typeId"));
         
-        switch (mApp.getCurrentGroupBy()) {
-		case NONE:
-			mEntries = DBUtil.fetchEntries(mContext, bundle.getInt("typeId"));
-			mArrayAdapter = new GroupByNoneAdapter(mContext, R.layout.entry_list_item, mEntries); 
-			break;
-
-		case DATE:
-			mEntries = DBUtil.fetchEntriesByDate(mContext, bundle.getInt("typeId"));
-			mArrayAdapter = new GroupByDateAdapter(mContext, R.layout.entry_list_item, mEntries); 
-			break;
-			
-		case MAX:
-			mEntries = DBUtil.fetchEntriesByMax(mContext, bundle.getInt("typeId"));
-			mArrayAdapter = new GroupByDateAdapter(mContext, R.layout.entry_list_item, mEntries); 
-			break;
-		}
-        
-        setListAdapter(mArrayAdapter);
-        
+        resetListView();
         setDateAndtime();
         
         //dialog box layout
@@ -237,6 +187,7 @@ public class EntriesListActivity extends ListActivity {
         
 		inializeTimeControls();
 		
+		//Add entry button
 		Button addEntryButton = (Button) findViewById(R.id.add_entry);
 		addEntryButton.setOnClickListener(new OnClickListener() {
 			
@@ -244,6 +195,56 @@ public class EntriesListActivity extends ListActivity {
 			public void onClick(View v) {
 				mApp.setCurrrentDialogStatus(DialogStatus.ADD);
 				showDialog(DIALOG_ADD_ENTRY);
+			}
+		});
+		
+		//sorting entires
+		Spinner sortBy = (Spinner) findViewById(R.id.sort_by);
+		sortBy.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				SortBy currentSortBy = mApp.getCurrentSortBy();
+				
+				switch (position) {
+				case 0:
+					//sort by date - ASC
+					if (currentSortBy != SortBy.DATE_ASC) {
+						mApp.setCurrentSortBy(SortBy.DATE_ASC);
+						resetListView();
+					}
+					break;
+					
+				case 1:
+					//sort by date - DESC
+					if (currentSortBy != SortBy.DATE_DESC) {
+						mApp.setCurrentSortBy(SortBy.DATE_DESC);					
+						resetListView();
+					}
+					break;
+					
+				case 2:
+					//sort by value - ASC
+					if (currentSortBy != SortBy.VALUE_ASC) {
+						mApp.setCurrentSortBy(SortBy.VALUE_ASC);
+						resetListView();
+					}
+					break;
+					
+				case 3:
+					//sort by value - DESC
+					if (currentSortBy != SortBy.VALUE_DESC) {
+						mApp.setCurrentSortBy(SortBy.VALUE_DESC);
+						resetListView();
+					}
+					break;
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				//	Callback method to be invoked when the selection disappears from this view. The selection can disappear for instance when touch is activated or when the adapter becomes empty.
+				// We don't need to do anything for this
 			}
 		});
 		
@@ -337,14 +338,8 @@ public class EntriesListActivity extends ListActivity {
 		case R.id.group_entry_by_date:
 			
 			if (mApp.getCurrentGroupBy() != GroupBy.DATE) {
-				
-				mEntries = DBUtil.fetchEntriesByDate(mContext, mType.getId());
-				mArrayAdapter = new GroupByDateAdapter(this, R.layout.entry_list_item, mEntries);
-				
-				setListAdapter(mArrayAdapter);
-				mArrayAdapter.notifyDataSetInvalidated();
-				
 				mApp.setCurrentGroupBy(GroupBy.DATE);
+				resetListView();
 			}
 			
 			break;
@@ -352,14 +347,8 @@ public class EntriesListActivity extends ListActivity {
 		case R.id.group_entry_by_max:
 			
 			if (mApp.getCurrentGroupBy() != GroupBy.MAX) {
-				
-				mEntries = DBUtil.fetchEntriesByMax(mContext, mType.getId());
-				mArrayAdapter = new GroupByDateAdapter(this, R.layout.entry_list_item, mEntries);
-				
-				setListAdapter(mArrayAdapter);
-				mArrayAdapter.notifyDataSetInvalidated();
-				
 				mApp.setCurrentGroupBy(GroupBy.MAX);
+				resetListView();
 			}
 			
 			break;
@@ -367,8 +356,8 @@ public class EntriesListActivity extends ListActivity {
 		case R.id.group_entry_by_none:
 			
 			if (mApp.getCurrentGroupBy() != GroupBy.NONE) {
-				
-				removeGroupBy();
+				mApp.setCurrentGroupBy(GroupBy.NONE);
+				resetListView();
 			}
 			
 			break;
@@ -464,7 +453,7 @@ public class EntriesListActivity extends ListActivity {
 			        	   Toast.makeText(mContext, mContext.getResources().getString(R.string.entry_saved), Toast.LENGTH_SHORT).show();
 			        	   
 			        	   if (mApp.getCurrentGroupBy() != GroupBy.NONE) {
-			        		   removeGroupBy();
+			        		   resetListView();
 			        	   } else {
 			        		   mArrayAdapter.add(entry);
 			        		   mArrayAdapter.notifyDataSetChanged();
@@ -624,7 +613,7 @@ public class EntriesListActivity extends ListActivity {
 	}
 	
 	/**
-	 * Set teh passed date
+	 * Set the passed date
 	 * @param date
 	 */
 	private void setDateAndtime(Date date) {
@@ -650,15 +639,53 @@ public class EntriesListActivity extends ListActivity {
 	}
 
 	/**
-	 * Remove group by 
+	 * Reset Listview based on current sort by and group by
 	 */
-	private void removeGroupBy() {
-		mEntries = DBUtil.fetchEntries(mContext, mType.getId());
-		mArrayAdapter = new GroupByNoneAdapter(this, R.layout.entry_list_item, mEntries);
+	private void resetListView() {
+		switch (mApp.getCurrentGroupBy()) {
+		case DATE:
+			mEntries = DBUtil.fetchEntriesByDate(mContext, mType.getId(), getSortBy());
+			break;
+
+		case MAX:
+			mEntries = DBUtil.fetchEntriesByMax(mContext, mType.getId(), getSortBy());
+			break;
+			
+		case NONE:
+			
+			mEntries = DBUtil.fetchEntries(mContext, mType.getId(), getSortBy());
+			break;
+		}
+		
+		mArrayAdapter = new GroupByAdapter(this, R.layout.entry_list_item, mEntries);
 		
 		setListAdapter(mArrayAdapter);
 		mArrayAdapter.notifyDataSetInvalidated();
-		
-		mApp.setCurrentGroupBy(GroupBy.NONE);
+	}
+
+	/**
+	 * Get the order by string based on current sort by
+	 * @return
+	 */
+	private String getSortBy() {
+		String orderBy = "";
+		switch (mApp.getCurrentSortBy()) {
+		case DATE_ASC:
+			orderBy = ENTRY_DATE;
+			break;
+			
+		case DATE_DESC:
+			orderBy = ENTRY_DATE + " DESC";
+			break;
+			
+		case VALUE_ASC:
+			orderBy = ENTRY_VALUE;
+			break;
+			
+		case VALUE_DESC:
+			orderBy = ENTRY_VALUE + " DESC";
+			break;
+		}
+		return orderBy;
 	}
 }
