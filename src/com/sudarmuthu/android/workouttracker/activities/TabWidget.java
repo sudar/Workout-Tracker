@@ -44,7 +44,7 @@ public class TabWidget extends TabActivity {
 	    // Graph tab
 	    intent = new Intent().setClass(this, EntriesGraphActivity.class).putExtra("typeId", typeId);
 		spec = tabHost.newTabSpec("date").setIndicator(this.getString(R.string.tab_graph),
-				res.getDrawable(R.drawable.ic_tab_date)).setContent(intent);
+				res.getDrawable(R.drawable.ic_tab_graph)).setContent(intent);
 	    tabHost.addTab(spec);
 
 	    // Stats tab
