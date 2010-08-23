@@ -47,6 +47,17 @@ public class EntriesGraphActivity extends Activity {
 	}
 	
 	/**
+	 * When the activity is resumed
+	 * 
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mEntryGraphHandler.loadGraph();
+	}
+
+	/**
 	 * When the back button is pressed
 	 * 
 	 * @see android.app.Activity#onBackPressed()

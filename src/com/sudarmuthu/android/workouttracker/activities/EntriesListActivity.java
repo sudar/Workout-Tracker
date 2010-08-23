@@ -177,9 +177,6 @@ public class EntriesListActivity extends ListActivity {
         Log.d(TAG, "Got type id: " + bundle.getInt("typeId"));
         mType = DBUtil.fetchType(mContext, bundle.getInt("typeId"));
         
-        resetListView();
-        setDateAndtime();
-        
         //dialog box layout
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
 		mAddEntryDialogLayout = inflater.inflate(R.layout.add_entry_dialog,
@@ -524,6 +521,16 @@ public class EntriesListActivity extends ListActivity {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+        resetListView();
+        setDateAndtime();        		
+	}
+
 	/**
 	 * Update the Date and Time buttons
 	 */
@@ -642,6 +649,8 @@ public class EntriesListActivity extends ListActivity {
 	 * Reset Listview based on current sort by and group by
 	 */
 	private void resetListView() {
+		Log.d(this.getClass().getSimpleName(), "List View reset");
+		
 		switch (mApp.getCurrentGroupBy()) {
 		case DATE:
 			mEntries = DBUtil.fetchEntriesByDate(mContext, mType.getId(), getSortBy());
