@@ -24,9 +24,9 @@
 <string name="tab_list">Lists</string>
 <string name="tab_graph">Graph</string>
 <string name="tab_stats">Stats</string>
-<string-array name="default_sorts"><item>Sort by Date - Asc</item>
-<item>Sort by Date - Desc</item>
-<item>Sort by Value - Asc</item>
-<item>Sort by Value - Desc</item>
+<string-array name="default_sorts"><item>Sort by Date - Desc</item>
+<item>Sort by Date - Asc</item>
+<item>Sort by Value - Desc</item><item>Sort by Value - Asc</item>
+
 </string-array>
 </resources>

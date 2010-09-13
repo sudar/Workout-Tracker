@@ -13,7 +13,7 @@
 <TableLayout android:id="@+id/TableLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content"><TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content"><Button android:text="@+id/Button01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/entry_date"></Button><Button android:text="@+id/Button02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/entry_time"></Button>
 
 
-</TableRow><TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/entry_entry" android:text="@string/value"></TextView><EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/entry_value"></EditText>
+</TableRow><TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/entry_entry" android:text="@string/value"></TextView><EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/entry_value" android:inputType="numberDecimal"></EditText>
 
 
 </TableRow></TableLayout>

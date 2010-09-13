@@ -178,6 +178,7 @@ public class EntriesListActivity extends ListActivity {
         mType = DBUtil.fetchType(mContext, bundle.getInt("typeId"));
         
         //dialog box layout
+        //TODO: Remove this
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
 		mAddEntryDialogLayout = inflater.inflate(R.layout.add_entry_dialog,
 		                               (ViewGroup) findViewById(R.id.layout_root));
@@ -205,14 +206,6 @@ public class EntriesListActivity extends ListActivity {
 				
 				switch (position) {
 				case 0:
-					//sort by date - ASC
-					if (currentSortBy != SortBy.DATE_ASC) {
-						mApp.setCurrentSortBy(SortBy.DATE_ASC);
-						resetListView();
-					}
-					break;
-					
-				case 1:
 					//sort by date - DESC
 					if (currentSortBy != SortBy.DATE_DESC) {
 						mApp.setCurrentSortBy(SortBy.DATE_DESC);					
@@ -220,18 +213,26 @@ public class EntriesListActivity extends ListActivity {
 					}
 					break;
 					
+				case 1:
+					//sort by date - ASC
+					if (currentSortBy != SortBy.DATE_ASC) {
+						mApp.setCurrentSortBy(SortBy.DATE_ASC);
+						resetListView();
+					}
+					break;
+					
 				case 2:
-					//sort by value - ASC
-					if (currentSortBy != SortBy.VALUE_ASC) {
-						mApp.setCurrentSortBy(SortBy.VALUE_ASC);
+					//sort by value - DESC
+					if (currentSortBy != SortBy.VALUE_DESC) {
+						mApp.setCurrentSortBy(SortBy.VALUE_DESC);
 						resetListView();
 					}
 					break;
 					
 				case 3:
-					//sort by value - DESC
-					if (currentSortBy != SortBy.VALUE_DESC) {
-						mApp.setCurrentSortBy(SortBy.VALUE_DESC);
+					//sort by value - ASC
+					if (currentSortBy != SortBy.VALUE_ASC) {
+						mApp.setCurrentSortBy(SortBy.VALUE_ASC);
 						resetListView();
 					}
 					break;

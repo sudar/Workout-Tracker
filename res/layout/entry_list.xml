@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="wrap_content" android:layout_height="wrap_content">
-	<ListView android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:id="@android:id/list"></ListView>
-</LinearLayout>-->
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="wrap_content" android:layout_height="wrap_content"
 	android:orientation="vertical">
@@ -23,10 +17,3 @@
 		android:layout_height="0dip" android:choiceMode="multipleChoice"
 		android:layout_below="@id/top_control_bar" android:layout_above="@id/bottom_control_bar"></ListView>
 </RelativeLayout>
-		
-		<!--
-	<TextView android:id="@android:id/empty" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="@string/menu_add_entry"
-		android:layout_below="@id/top_control_bar" android:layout_above="@id/bottom_control_bar" />
--->
-
