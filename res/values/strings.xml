@@ -29,4 +29,5 @@
 <item>Sort by Value - Desc</item><item>Sort by Value - Asc</item>
 
 </string-array>
+<string name="edit_button">Edit</string>
 </resources>
