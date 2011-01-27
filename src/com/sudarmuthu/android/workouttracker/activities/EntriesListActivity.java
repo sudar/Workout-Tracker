@@ -430,11 +430,12 @@ public class EntriesListActivity extends ListActivity {
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		
 		EditText entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
+		AlertDialog alertDialog = (AlertDialog) dialog;
+		Button positiveButton = null;
 		
 		switch (id) {
 		case DIALOG_ADD_ENTRY:
 			
-			AlertDialog alertDialog = (AlertDialog) dialog;
 			
 			switch (mApp.getCurrrentDialogStatus()) {
 			case ADD:
@@ -458,6 +459,10 @@ public class EntriesListActivity extends ListActivity {
 			        	   }
 			           }
 			       });
+
+				positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+				positiveButton.setText(this.getString(R.string.add));
+				positiveButton.invalidate();
 				
 				setDateAndtime();
 				updateDisplay();
@@ -471,7 +476,7 @@ public class EntriesListActivity extends ListActivity {
 				
 				alertDialog.setMessage(this.getString(R.string.edit, mType.getName()));
 				
-				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getString(R.string.edit), new DialogInterface.OnClickListener() {
+				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getString(R.string.edit_button), new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			        	   //Update the data into db
 							EditText entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
@@ -486,6 +491,10 @@ public class EntriesListActivity extends ListActivity {
 			           }
 
 			       });
+				
+				positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+				positiveButton.setText(this.getString(R.string.edit_button));
+				positiveButton.invalidate();
 				
 				Entry entryToEdit = (Entry) entryTime.getTag();
 				entryDate.setTag(Integer.toString(entryToEdit.getDaySeq()));
