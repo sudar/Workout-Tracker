@@ -1,4 +1,4 @@
-package com.sudarmuthu.android.workouttracker.activities;
+package com.sudarmuthu.android.wt.activities;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sudarmuthu.android.workouttracker.R;
-import com.sudarmuthu.android.workouttracker.data.DBUtil;
-import com.sudarmuthu.android.workouttracker.data.Type;
+import com.sudarmuthu.android.wt.data.DBUtil;
+import com.sudarmuthu.android.wt.data.Type;
 
 public class ShowTypesListActivity extends ListActivity {
 

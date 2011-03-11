@@ -1,7 +1,7 @@
 /**
  * Graph Activity
  */
-package com.sudarmuthu.android.workouttracker.activities;
+package com.sudarmuthu.android.wt.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.sudarmuthu.android.workouttracker.R;
-import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp;
-import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp.GroupBy;
-import com.sudarmuthu.android.workouttracker.data.DBUtil;
-import com.sudarmuthu.android.workouttracker.graph.EntryGraphHandler;
+import com.sudarmuthu.android.wt.app.WorkoutTrackerApp;
+import com.sudarmuthu.android.wt.app.WorkoutTrackerApp.GroupBy;
+import com.sudarmuthu.android.wt.data.DBUtil;
+import com.sudarmuthu.android.wt.graph.EntryGraphHandler;
 
 /**
  * @author "Sudar Muthu (sudarm@)"

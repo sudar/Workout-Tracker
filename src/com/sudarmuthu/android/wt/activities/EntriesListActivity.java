@@ -1,10 +1,10 @@
 /**
  * Activity to display entries in list 
  */
-package com.sudarmuthu.android.workouttracker.activities;
+package com.sudarmuthu.android.wt.activities;
 
-import static com.sudarmuthu.android.workouttracker.data.DBConstants.ENTRY_DATE;
-import static com.sudarmuthu.android.workouttracker.data.DBConstants.ENTRY_VALUE;
+import static com.sudarmuthu.android.wt.data.DBConstants.ENTRY_DATE;
+import static com.sudarmuthu.android.wt.data.DBConstants.ENTRY_VALUE;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,13 +43,13 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.sudarmuthu.android.workouttracker.R;
-import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp;
-import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp.DialogStatus;
-import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp.GroupBy;
-import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp.SortBy;
-import com.sudarmuthu.android.workouttracker.data.DBUtil;
-import com.sudarmuthu.android.workouttracker.data.Entry;
-import com.sudarmuthu.android.workouttracker.data.Type;
+import com.sudarmuthu.android.wt.app.WorkoutTrackerApp;
+import com.sudarmuthu.android.wt.app.WorkoutTrackerApp.DialogStatus;
+import com.sudarmuthu.android.wt.app.WorkoutTrackerApp.GroupBy;
+import com.sudarmuthu.android.wt.app.WorkoutTrackerApp.SortBy;
+import com.sudarmuthu.android.wt.data.DBUtil;
+import com.sudarmuthu.android.wt.data.Entry;
+import com.sudarmuthu.android.wt.data.Type;
 /**
  * @author "Sudar Muthu (sudarm@)"
  *

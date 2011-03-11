@@ -1,17 +1,17 @@
 /**
  * 
  */
-package com.sudarmuthu.android.workouttracker.data;
+package com.sudarmuthu.android.wt.data;
 
 import static android.provider.BaseColumns._ID;
-import static com.sudarmuthu.android.workouttracker.data.DBConstants.ENTRY_DATE;
-import static com.sudarmuthu.android.workouttracker.data.DBConstants.ENTRY_DAY_SEQ;
-import static com.sudarmuthu.android.workouttracker.data.DBConstants.ENTRY_TABLE_NAME;
-import static com.sudarmuthu.android.workouttracker.data.DBConstants.ENTRY_TYPE_ID;
-import static com.sudarmuthu.android.workouttracker.data.DBConstants.ENTRY_VALUE;
-import static com.sudarmuthu.android.workouttracker.data.DBConstants.TYPES_CREATED_ON;
-import static com.sudarmuthu.android.workouttracker.data.DBConstants.TYPES_NAME;
-import static com.sudarmuthu.android.workouttracker.data.DBConstants.TYPES_TABLE_NAME;
+import static com.sudarmuthu.android.wt.data.DBConstants.ENTRY_DATE;
+import static com.sudarmuthu.android.wt.data.DBConstants.ENTRY_DAY_SEQ;
+import static com.sudarmuthu.android.wt.data.DBConstants.ENTRY_TABLE_NAME;
+import static com.sudarmuthu.android.wt.data.DBConstants.ENTRY_TYPE_ID;
+import static com.sudarmuthu.android.wt.data.DBConstants.ENTRY_VALUE;
+import static com.sudarmuthu.android.wt.data.DBConstants.TYPES_CREATED_ON;
+import static com.sudarmuthu.android.wt.data.DBConstants.TYPES_NAME;
+import static com.sudarmuthu.android.wt.data.DBConstants.TYPES_TABLE_NAME;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sudarmuthu.android.workouttracker.activities;
+package com.sudarmuthu.android.wt.activities;
 
 import android.app.Activity;
 

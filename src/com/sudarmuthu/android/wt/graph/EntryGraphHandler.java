@@ -1,7 +1,7 @@
 /**
  * Graph Handler
  */
-package com.sudarmuthu.android.workouttracker.graph;
+package com.sudarmuthu.android.wt.graph;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,9 +11,9 @@ import android.content.Context;
 import android.util.Log;
 import android.webkit.WebView;
 
-import com.sudarmuthu.android.workouttracker.app.WorkoutTrackerApp;
-import com.sudarmuthu.android.workouttracker.data.DBUtil;
-import com.sudarmuthu.android.workouttracker.data.Type;
+import com.sudarmuthu.android.wt.app.WorkoutTrackerApp;
+import com.sudarmuthu.android.wt.data.DBUtil;
+import com.sudarmuthu.android.wt.data.Type;
 
 /**
  * @author "Sudar Muthu (sudarm@)"

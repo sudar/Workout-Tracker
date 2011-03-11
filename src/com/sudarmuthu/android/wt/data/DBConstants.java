@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sudarmuthu.android.workouttracker.data;
+package com.sudarmuthu.android.wt.data;
 
 import android.provider.BaseColumns;
 
