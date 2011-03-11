@@ -74,9 +74,12 @@ public class ShowTypesListActivity extends ListActivity {
         //dialog box layout
 		mContext = this;
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-		mAddtypeDialogLayout = inflater.inflate(R.layout.add_type_dialog,
-		                               (ViewGroup) findViewById(R.id.type_layout_root));
-		
+		mAddtypeDialogLayout = inflater.inflate(R.layout.add_type_dialog, (ViewGroup) findViewById(R.id.type_layout_root));
+
+		if (types.size() == 0) {
+			// if there are no types initially, then show the add type dialog
+			showDialog(DIALOG_ADD_TYPE);			
+		}
 	}
 
 	@Override
@@ -110,7 +113,7 @@ public class ShowTypesListActivity extends ListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.add_type:
+		case R.id.add_exercise:
 			showDialog(DIALOG_ADD_TYPE);
 			break;
 
@@ -139,7 +142,7 @@ public class ShowTypesListActivity extends ListActivity {
 			builder.setView(mAddtypeDialogLayout);
 			builder.setMessage(this.getString(R.string.add_type_title))
 		       .setCancelable(false)
-		       .setPositiveButton(this.getString(R.string.add), new DialogInterface.OnClickListener() {
+		       .setPositiveButton(this.getString(R.string.add_type), new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
 		        	   //Insert the new data into db
 		        	   EditText typeValue = (EditText) mAddtypeDialogLayout.findViewById(R.id.type_name);
