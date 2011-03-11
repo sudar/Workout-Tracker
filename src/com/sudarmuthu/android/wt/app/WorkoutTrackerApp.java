@@ -8,7 +8,7 @@ import android.app.Application;
 /**
  * Application object for the app 
  * 
- * @author "Sudar Muthu (sudarm@)"
+ * @author "Sudar Muthu (http://sudarmuthu.com)"
  *
  */
 public class WorkoutTrackerApp extends Application {
@@ -20,7 +20,7 @@ public class WorkoutTrackerApp extends Application {
 	/**
 	 * Current dialog status
 	 * 
-	 * @author "Sudar Muthu (sudarm@)"
+	 * @author "Sudar Muthu (http://sudarmuthu.com)"
 	 *
 	 */
 	public enum DialogStatus {
@@ -30,7 +30,7 @@ public class WorkoutTrackerApp extends Application {
 	/**
 	 * Current group by status
 	 * 
-	 * @author "Sudar Muthu (sudarm@)"
+	 * @author "Sudar Muthu (http://sudarmuthu.com)"
 	 *
 	 */
 	public enum GroupBy {
@@ -40,7 +40,7 @@ public class WorkoutTrackerApp extends Application {
 	/**
 	 * Current Sort by status
 	 * 
-	 * @author "Sudar Muthu (sudarm@)"
+	 * @author "Sudar Muthu (http://sudarmuthu.com)"
 	 *
 	 */
 	public enum SortBy {

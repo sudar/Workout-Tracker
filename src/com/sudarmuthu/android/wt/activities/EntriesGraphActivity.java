@@ -11,14 +11,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
-import com.sudarmuthu.android.workouttracker.R;
+import com.sudarmuthu.android.wt.R;
 import com.sudarmuthu.android.wt.app.WorkoutTrackerApp;
 import com.sudarmuthu.android.wt.app.WorkoutTrackerApp.GroupBy;
 import com.sudarmuthu.android.wt.data.DBUtil;
 import com.sudarmuthu.android.wt.graph.EntryGraphHandler;
 
 /**
- * @author "Sudar Muthu (sudarm@)"
+ * @author "Sudar Muthu (http://sudarmuthu.com)"
  *
  */
 public class EntriesGraphActivity extends Activity {

@@ -11,10 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TabHost;
 
-import com.sudarmuthu.android.workouttracker.R;
+import com.sudarmuthu.android.wt.R;
 
 /**
- * @author "Sudar Muthu (sudarm@)"
+ * @author "Sudar Muthu (http://sudarmuthu.com)"
  *
  */
 public class TabWidget extends TabActivity {

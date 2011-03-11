@@ -27,7 +27,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
- * @author "Sudar Muthu (sudarm@)"
+ * @author "Sudar Muthu (http://sudarmuthu.com)"
  *
  */
 public class DBUtil {

@@ -16,7 +16,7 @@ import com.sudarmuthu.android.wt.data.DBUtil;
 import com.sudarmuthu.android.wt.data.Type;
 
 /**
- * @author "Sudar Muthu (sudarm@)"
+ * @author "Sudar Muthu (http://sudarmuthu.com)"
  * 
  */
 public class EntryGraphHandler {

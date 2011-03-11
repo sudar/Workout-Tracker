@@ -6,7 +6,7 @@ package com.sudarmuthu.android.wt.data;
 import android.provider.BaseColumns;
 
 /**
- * @author "Sudar Muthu (sudarm@)"
+ * @author "Sudar Muthu (http://sudarmuthu.com)"
  *
  */
 public interface DBConstants extends BaseColumns {

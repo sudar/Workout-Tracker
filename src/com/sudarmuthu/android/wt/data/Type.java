@@ -6,7 +6,7 @@ package com.sudarmuthu.android.wt.data;
 import java.util.Date;
 
 /**
- * @author "Sudar Muthu (sudarm@)"
+ * @author "Sudar Muthu (http://sudarmuthu.com)"
  *
  */
 public class Type {

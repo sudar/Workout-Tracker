@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sudarmuthu.android.workouttracker.R;
+import com.sudarmuthu.android.wt.R;
 import com.sudarmuthu.android.wt.data.DBUtil;
 import com.sudarmuthu.android.wt.data.Type;
 
@@ -50,8 +50,7 @@ public class ShowTypesListActivity extends ListActivity {
 
 		types = DBUtil.fetchAllTypes(this);
 
-		mArrayAdapter = new ArrayAdapter<Type>(this, R.layout.type_list_item,
-				types) {
+		mArrayAdapter = new ArrayAdapter<Type>(this, R.layout.type_list_item, types) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View row;

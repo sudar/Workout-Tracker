@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 /**
- * @author "Sudar Muthu (sudarm@)"
+ * @author "Sudar Muthu (http://sudarmuthu.com)"
  *
  */
 public class EntriesDateActivity extends ListActivity {
