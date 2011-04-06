@@ -88,14 +88,14 @@ public class ShowExercisesListActivity extends ListActivity {
 		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
 		mAddExerciseDialogLayout = inflater.inflate(R.layout.add_type_dialog, (ViewGroup) findViewById(R.id.type_layout_root));
 
+		exerciseName = (EditText) mAddExerciseDialogLayout.findViewById(R.id.type_name);
+		//register for context menu
+		registerForContextMenu(getListView());		
+		
 		if (mExercises.size() == 0) {
 			// if there are no exercises initially, then show the add type dialog
 			showDialog(DIALOG_ADD_EXERCISE);			
 		}
-		
-		exerciseName = (EditText) mAddExerciseDialogLayout.findViewById(R.id.type_name);
-		//register for context menu
-		registerForContextMenu(getListView());		
 	}
 
 	@Override
@@ -235,9 +235,7 @@ public class ShowExercisesListActivity extends ListActivity {
 				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getString(R.string.add, this.getString(R.string.exercise)), new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			        	   //Insert the new data into db
-			        	   EditText typeValue = (EditText) mAddExerciseDialogLayout.findViewById(R.id.type_name);
-
-			        	   String typeName = typeValue.getText().toString();
+			        	   String typeName = exerciseName.getText().toString();
 			        	   Exercise newExercise = DBUtil.insertExercise(mContext, typeName);
 			        	   
 			        	   Toast.makeText(mContext, mContext.getResources().getString(R.string.exercise_saved), Toast.LENGTH_SHORT).show();
