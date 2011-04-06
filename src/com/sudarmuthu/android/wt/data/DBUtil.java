@@ -35,28 +35,26 @@ public class DBUtil {
 	private static final String TAG = "DBUtil";
 
 	/**
-	 * Fetch all Types
+	 * Fetch all Exercises
 	 * 
 	 * @param context
 	 * @return
 	 */
-	public static List<Type> fetchAllTypes(Context context) {
+	public static List<Exercise> fetchAllExercises(Context context) {
 		String [] FROM = {_ID, TYPES_NAME, TYPES_CREATED_ON};
 		SQLiteDatabase db = new DBData(context).getReadableDatabase();
-		List<Type> types = new ArrayList<Type>(); 
+		List<Exercise> exercises = new ArrayList<Exercise>(); 
 		
 		Cursor cursor = db.query(TYPES_TABLE_NAME, FROM, null, null, null, null, TYPES_NAME); 
 
 		while (cursor.moveToNext()) {
-			Type temp = new Type(cursor.getInt(0),
-								 cursor.getString(1),
-								 new Date(cursor.getLong(2)));
-			types.add(temp);
+			Exercise temp = new Exercise(cursor.getInt(0), cursor.getString(1), new Date(cursor.getLong(2)));
+			exercises.add(temp);
 		}
 		
 		cursor.close();
 		db.close();
-		return types;
+		return exercises;
 	}
 	
 	/**
@@ -66,7 +64,7 @@ public class DBUtil {
 	 * @param typeId
 	 * @return
 	 */
-	public static Type fetchType(Context context, int typeId) {
+	public static Exercise fetchExercise(Context context, int typeId) {
 		String [] FROM = {_ID, TYPES_NAME, TYPES_CREATED_ON};
 		String where = _ID + "=" + typeId;
 		
@@ -75,8 +73,7 @@ public class DBUtil {
 		Cursor cursor = db.query(TYPES_TABLE_NAME, FROM, where, null, null, null, TYPES_NAME); 
 		
 		cursor.moveToNext();
-		Type temp = new Type(cursor.getInt(0), cursor.getString(1), new Date(
-				cursor.getLong(2)));
+		Exercise temp = new Exercise(cursor.getInt(0), cursor.getString(1), new Date(cursor.getLong(2)));
 
 		cursor.close();
 		db.close();
@@ -90,7 +87,7 @@ public class DBUtil {
 	 * @param context
 	 * @param typeName
 	 */
-	public static Type insertType(Context context, String typeName) {
+	public static Exercise insertExercise(Context context, String typeName) {
 		SQLiteDatabase db = new DBData(context).getWritableDatabase();
 		ContentValues values = new ContentValues();
 		
@@ -100,10 +97,59 @@ public class DBUtil {
 		
 		db.close();
 		
-		Type newType = fetchType(context, (int) id);
+		Exercise newType = fetchExercise(context, (int) id);
 		return newType;
 	}
 
+	/**
+	 * Update Exercise Name
+	 * 
+	 * @param context
+	 * @param exerciseToEdit
+	 */
+	public static void updateExercise(Context context, Exercise exerciseToEdit) {
+		SQLiteDatabase db = new DBData(context).getWritableDatabase();
+		String whereClause = _ID + "=" + exerciseToEdit.getId();
+		ContentValues values = new ContentValues();
+		
+		values.put(TYPES_NAME, exerciseToEdit.getName());
+		
+		db.update(TYPES_TABLE_NAME, values, whereClause, null);
+		db.close();
+	}
+
+	/**
+	 * Delete a Exercise
+	 * 
+	 * @param context
+	 * @param exerciseId
+	 */
+	public static void deleteExercise(Context context, int exerciseId ) {
+		deleteAllEntries(context, exerciseId);
+		
+		SQLiteDatabase db = new DBData(context).getWritableDatabase();
+		String where = _ID +  "=" + exerciseId;
+		
+		db.delete(TYPES_TABLE_NAME, where, null);
+		db.close();
+
+	}
+	
+	/**
+	 * Delete all entries for an exercise
+	 * 
+	 * @param context
+	 * @param exerciseId
+	 */
+	private static void deleteAllEntries(Context context, int exerciseId) {
+		SQLiteDatabase db = new DBData(context).getWritableDatabase();
+		
+		String where = ENTRY_TYPE_ID + "=" + exerciseId;
+		db.delete(ENTRY_TABLE_NAME, where, null);
+		db.close();
+		
+	}
+	
 	/**
 	 * Fetch Entires based on type
 	 * 
@@ -412,6 +458,4 @@ public class DBUtil {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format); // set the format to sql date time
 		return dateFormat.format(dateValue);
 	}
-
-
 }

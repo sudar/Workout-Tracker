@@ -13,9 +13,13 @@ import android.app.Application;
  */
 public class WorkoutTrackerApp extends Application {
 
+	//Entry status
 	private DialogStatus currrentDialogStatus = DialogStatus.DEFAULT;
 	private GroupBy currentGroupBy = GroupBy.NONE; 
 	private SortBy currentSortBy = SortBy.DATE_ASC;
+	
+	//Exercise status
+	private DialogStatus currentExerciseDialogStatus = DialogStatus.DEFAULT;
 	
 	/**
 	 * Current dialog status
@@ -94,6 +98,20 @@ public class WorkoutTrackerApp extends Application {
 	 */
 	public void setCurrentSortBy(SortBy currentSortBy) {
 		this.currentSortBy = currentSortBy;
+	}
+
+	/**
+	 * @param currentExerciseDialogStatus the currentExerciseDialogStatus to set
+	 */
+	public void setCurrentExerciseDialogStatus(DialogStatus currentExerciseDialogStatus) {
+		this.currentExerciseDialogStatus = currentExerciseDialogStatus;
+	}
+
+	/**
+	 * @return the currentExerciseDialogStatus
+	 */
+	public DialogStatus getCurrentExerciseDialogStatus() {
+		return currentExerciseDialogStatus;
 	}
 
 }

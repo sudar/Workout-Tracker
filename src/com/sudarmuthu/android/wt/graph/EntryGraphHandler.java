@@ -13,7 +13,7 @@ import android.webkit.WebView;
 
 import com.sudarmuthu.android.wt.app.WorkoutTrackerApp;
 import com.sudarmuthu.android.wt.data.DBUtil;
-import com.sudarmuthu.android.wt.data.Type;
+import com.sudarmuthu.android.wt.data.Exercise;
 
 /**
  * @author "Sudar Muthu (http://sudarmuthu.com)"
@@ -22,7 +22,7 @@ import com.sudarmuthu.android.wt.data.Type;
 public class EntryGraphHandler {
 	private static final String TAG = "EntryGraphHandler";
 	private WebView mAppView;
-	private Type mType;
+	private Exercise mType;
 	private Context mContext;
 	private WorkoutTrackerApp mApp;
 	
@@ -33,7 +33,7 @@ public class EntryGraphHandler {
 	 * @param type
 	 * @param context 
 	 */
-	public EntryGraphHandler(WebView appView, Type type, Context context, WorkoutTrackerApp app) {
+	public EntryGraphHandler(WebView appView, Exercise type, Context context, WorkoutTrackerApp app) {
 		this.mAppView = appView;
 		this.mType = type;
 		this.mContext = context;

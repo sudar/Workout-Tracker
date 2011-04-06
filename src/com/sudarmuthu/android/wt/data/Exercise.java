@@ -9,7 +9,7 @@ import java.util.Date;
  * @author "Sudar Muthu (http://sudarmuthu.com)"
  *
  */
-public class Type {
+public class Exercise {
 	private int id;
 	private String name;
 	private Date createdOn;
@@ -21,7 +21,7 @@ public class Type {
 	 * @param name
 	 * @param createdOn
 	 */
-	public Type(int id, String name, Date createdOn) {
+	public Exercise(int id, String name, Date createdOn) {
 		this.id = id;
 		this.name = name;
 		this.createdOn = createdOn;
@@ -33,7 +33,7 @@ public class Type {
 	 * @param name
 	 * @param createdOn
 	 */
-	public Type (String name, Date createdOn) {
+	public Exercise (String name, Date createdOn) {
 		this(0, name, createdOn);
 	}
 	

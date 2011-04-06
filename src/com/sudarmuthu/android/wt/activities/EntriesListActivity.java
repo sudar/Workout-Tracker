@@ -49,7 +49,7 @@ import com.sudarmuthu.android.wt.app.WorkoutTrackerApp.GroupBy;
 import com.sudarmuthu.android.wt.app.WorkoutTrackerApp.SortBy;
 import com.sudarmuthu.android.wt.data.DBUtil;
 import com.sudarmuthu.android.wt.data.Entry;
-import com.sudarmuthu.android.wt.data.Type;
+import com.sudarmuthu.android.wt.data.Exercise;
 /**
  * @author "Sudar Muthu (http://sudarmuthu.com)"
  *
@@ -59,7 +59,7 @@ public class EntriesListActivity extends ListActivity {
 	private static final String TAG = "ShowEntries";
 	
     private List<Entry> mEntries;
-    private Type mType;
+    private Exercise mType;
 	private Button entryDate;
 	private Button entryTime;
 	private View mAddEntryDialogLayout;
@@ -175,13 +175,12 @@ public class EntriesListActivity extends ListActivity {
 
         Bundle bundle = getIntent().getExtras();
         Log.d(TAG, "Got type id: " + bundle.getInt("typeId"));
-        mType = DBUtil.fetchType(mContext, bundle.getInt("typeId"));
+        mType = DBUtil.fetchExercise(mContext, bundle.getInt("typeId"));
         
         //dialog box layout
         //TODO: Remove this
-		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-		mAddEntryDialogLayout = inflater.inflate(R.layout.add_entry_dialog,
-		                               (ViewGroup) findViewById(R.id.layout_root));
+//		LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+		mAddEntryDialogLayout = mInflater.inflate(R.layout.add_entry_dialog, (ViewGroup) findViewById(R.id.layout_root));
         
 		inializeTimeControls();
 		
@@ -394,7 +393,7 @@ public class EntriesListActivity extends ListActivity {
 			builder.setView(mAddEntryDialogLayout);
 			builder.setMessage("")
 		       .setCancelable(false)
-		       .setPositiveButton("Add", null)
+		       .setPositiveButton(this.getString(R.string.add, mType.getName()), null)
 		       .setNegativeButton(this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
 		                dialog.cancel();
@@ -441,7 +440,7 @@ public class EntriesListActivity extends ListActivity {
 			case ADD:
 			
 				alertDialog.setMessage(this.getString(R.string.add, mType.getName()));
-				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getString(R.string.add), new DialogInterface.OnClickListener() {
+				alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, this.getString(R.string.add, mType.getName()), new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			        	   //Insert the new data into db
 			        	   EditText entryValue = (EditText) mAddEntryDialogLayout.findViewById(R.id.entry_value);
@@ -461,7 +460,7 @@ public class EntriesListActivity extends ListActivity {
 			       });
 
 				positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-				positiveButton.setText(this.getString(R.string.add));
+				positiveButton.setText(this.getString(R.string.add, mType.getName()));
 				positiveButton.invalidate();
 				
 				setDateAndtime();

@@ -5,16 +5,15 @@
     <string name="menu_entry_group_date">Total per day</string>
     <string name="menu_delete_entry">Delete Entry</string>
     <string name="menu_entry_edit">Edit Entry</string>
-    <string name="type">Type: </string>
+    <string name="exercise_name">Exercise Name: </string>
     <string name="value">Value:</string>
     <string name="add_entry">Add Entry</string>
     <string name="menu_about">About</string>
-    <string name="menu_add_type">Add Type</string>
-    <string name="hello">Hello World, Types!</string>
+    <string name="menu_add_exercise">Add Exercise</string>
     <string name="app_name">Workout Tracker</string>
-<string name="add_type_title">Add new type</string>
+<string name="add_exercise_title">Add new exercise to track</string>
 <string name="add">Add %s</string>
-<string name="type_saved">The new type has been saved</string>
+<string name="exercise_saved">The new exercise has been saved</string>
 <string name="entry_saved">The new entry has been saved</string>
 <string name="entry_deleted">The selected entry was deleted</string>
 <string name="entry_edited">The selected entry was updated</string>
@@ -30,4 +29,8 @@
 
 </string-array>
 <string name="edit_button">Edit</string>
+<string name="exercise">Exercise</string>
+<string name="edit_exercise">Edit</string>
+<string name="delete_exercise">Delete</string>
+<string name="exercise_deleted">The selected Exercise was deleted</string>
 </resources>

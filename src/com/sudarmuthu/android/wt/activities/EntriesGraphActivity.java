@@ -37,7 +37,7 @@ public class EntriesGraphActivity extends Activity {
         Log.d(TAG, "Got type id: " + bundle.getInt("typeId"));
     
         mApp = (WorkoutTrackerApp) getApplication();
-        mEntryGraphHandler = new EntryGraphHandler (wv, DBUtil.fetchType(this, bundle.getInt("typeId")), this, mApp);
+        mEntryGraphHandler = new EntryGraphHandler (wv, DBUtil.fetchExercise(this, bundle.getInt("typeId")), this, mApp);
 
         wv.getSettings().setJavaScriptEnabled(true);
         wv.addJavascriptInterface(mEntryGraphHandler, "testhandler");
