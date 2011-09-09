@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  
+    <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout3" android:layout_width="fill_parent" android:orientation="vertical" android:layout_margin="10dip">
+        <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:paddingBottom="5dip">
+            <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/textView1" android:text="@string/statistics"></TextView>
+        </LinearLayout>
+        <LinearLayout android:layout_height="wrap_content" android:id="@+id/LinearLayout01" android:layout_width="fill_parent">
+            <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dip" android:id="@+id/TextView01" android:text="@string/count"></TextView>
+            <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/statsCount"></TextView>
+        </LinearLayout>
+        <LinearLayout android:layout_height="wrap_content" android:id="@+id/LinearLayout02" android:layout_width="fill_parent">
+            <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dip" android:id="@+id/TextView03" android:text="@string/sum"></TextView>
+            <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/statsSum"></TextView>
+        </LinearLayout>
+        <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout2" android:layout_width="fill_parent">
+            <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dip" android:id="@+id/textView2" android:text="@string/average"></TextView>
+            <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/statsAverage"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout4" android:layout_width="fill_parent" android:orientation="vertical" android:layout_margin="10dip">
+        <LinearLayout android:layout_height="wrap_content" android:id="@+id/LinearLayout03" android:layout_width="fill_parent">
+            <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/TextView02" android:text="@string/value_range" android:paddingBottom="5dip"></TextView>
+        </LinearLayout>
+        <LinearLayout android:layout_height="wrap_content" android:id="@+id/LinearLayout05" android:layout_width="fill_parent">
+            <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dip" android:id="@+id/TextView07" android:text="@string/from"></TextView>
+            <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/valueFrom"></TextView>
+        </LinearLayout>
+        <LinearLayout android:layout_height="wrap_content" android:id="@+id/LinearLayout04" android:layout_width="fill_parent">
+            <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dip" android:id="@+id/TextView05" android:text="@string/to"></TextView>
+            <TextView android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/valueTo"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+    
+</LinearLayout>

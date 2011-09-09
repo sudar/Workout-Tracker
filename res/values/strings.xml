@@ -33,4 +33,11 @@
 <string name="edit_exercise">Edit</string>
 <string name="delete_exercise">Delete</string>
 <string name="exercise_deleted">The selected Exercise was deleted</string>
+<string name="statistics">Statistics</string>
+<string name="count">Count: </string>
+<string name="sum">Sum: </string>
+<string name="average">Average: </string>
+<string name="value_range">Value Range</string>
+<string name="from">From: </string>
+<string name="to">To: </string>
 </resources>
