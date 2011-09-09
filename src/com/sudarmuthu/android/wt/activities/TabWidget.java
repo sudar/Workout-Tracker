@@ -1,5 +1,5 @@
 /**
- * TAB VIEW
++ * TAB VIEW
  */
 package com.sudarmuthu.android.wt.activities;
 
@@ -7,13 +7,13 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.TabHost;
 
 import com.sudarmuthu.android.wt.R;
 
 /**
+ * Class to add Tab Widgets
+ * 
  * @author "Sudar Muthu (http://sudarmuthu.com)"
  *
  */
@@ -29,7 +29,7 @@ public class TabWidget extends TabActivity {
 
 	    Resources res = getResources(); // Resource object to get Drawables
 	    TabHost tabHost = getTabHost();  // The activity TabHost
-	    TabHost.TabSpec spec;  // Resusable TabSpec for each tab
+	    TabHost.TabSpec spec;  // Reusable TabSpec for each tab
 	    Intent intent;  // Reusable Intent for each tab
 
 	    // Create an Intent to launch an Activity for the tab (to be reused)
@@ -43,29 +43,12 @@ public class TabWidget extends TabActivity {
 				res.getDrawable(R.drawable.ic_tab_list)).setContent(intent);
 	    tabHost.addTab(spec);
 
-	    getTabWidget().getChildAt(0).setOnClickListener(new View.OnClickListener() {
-	    	
-	    	@Override
-	    	public void onClick(View v) {
-	    		Log.v("TEST", "Clicked 0");
-	    	}
-	    });
-	    
 	    // Graph tab
 	    intent = new Intent().setClass(this, EntriesGraphActivity.class).putExtra("typeId", typeId);
 		spec = tabHost.newTabSpec("date").setIndicator(this.getString(R.string.tab_graph),
 				res.getDrawable(R.drawable.ic_tab_graph)).setContent(intent);
 	    tabHost.addTab(spec);
 
-	    getTabWidget().getChildAt(1).setOnClickListener(new View.OnClickListener() {
-	    	
-	    	@Override
-	    	public void onClick(View v) {
-	    		Log.v("TEST", "Clicked 1");
-	    	}
-	    });
-	    
-	    
 	    // Stats tab
 	    intent = new Intent().setClass(this, EntriesStatsActivity.class).putExtra("typeId", typeId);
 	    spec = tabHost.newTabSpec("stats").setIndicator(this.getString(R.string.tab_stats),
@@ -73,14 +56,6 @@ public class TabWidget extends TabActivity {
 	                  .setContent(intent);
 	    tabHost.addTab(spec);
 
-	    getTabWidget().getChildAt(2).setOnClickListener(new View.OnClickListener() {
-	    	
-	    	@Override
-	    	public void onClick(View v) {
-	    		Log.v("TEST", "Clicked 2");
-	    	}
-	    });
-	    
 	    // set the initial tab
 	    tabHost.setCurrentTab(0);
 	}
