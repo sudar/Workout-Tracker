@@ -151,7 +151,7 @@ public class DBUtil {
 	}
 	
 	/**
-	 * Fetch Entires based on type
+	 * Fetch Entries based on type
 	 * 
 	 * @param context
 	 * @param typeId
