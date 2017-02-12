@@ -52,7 +52,7 @@ public class WorkoutTrackerApp extends Application {
 	}
 	
 	/**
-	 * Default Contstructor
+	 * Default Constructor
 	 */
 	public WorkoutTrackerApp() {
 		super();
